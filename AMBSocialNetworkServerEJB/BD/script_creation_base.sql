@@ -28,7 +28,7 @@ create table utilisateur
   url_avatar                varchar(255),
   description               text,
   partage_position          boolean default false,
-  partage_position_public   boolean default true,
+  partage_position_public   boolean default false,
   --latitude                  varchar(10),
   --longitude                 varchar(11),
   latitude                  real,
