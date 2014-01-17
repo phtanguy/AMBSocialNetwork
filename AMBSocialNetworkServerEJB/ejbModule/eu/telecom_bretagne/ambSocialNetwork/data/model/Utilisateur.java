@@ -3,6 +3,7 @@ package eu.telecom_bretagne.ambSocialNetwork.data.model;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
+import static javax.persistence.FetchType.EAGER;
 
 
 /**
@@ -53,7 +54,7 @@ public class Utilisateur implements Serializable {
 	private List<Commentaire> commentaires;
 
 	//bi-directional many-to-many association to Utilisateur
-	@ManyToMany
+	@ManyToMany(fetch = EAGER)
 	@JoinTable(
 		name="est_ami"
 		, joinColumns={
@@ -66,7 +67,7 @@ public class Utilisateur implements Serializable {
 	private List<Utilisateur> utilisateurs1;
 
 	//bi-directional many-to-many association to Utilisateur
-	@ManyToMany(mappedBy="utilisateurs1")
+	@ManyToMany(mappedBy="utilisateurs1", fetch = EAGER)
 	private List<Utilisateur> utilisateurs2;
 
 	public Utilisateur() {
