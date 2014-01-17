@@ -24,10 +24,6 @@ p,pre,h2,table {
     background: none repeat scroll 0 0 #eeeeee;
 }
 
-#affichage tr:hover {
-    background: #dddddd;
-}
-
 #affichage th {
     background: none repeat scroll 0 0 #bbbbbb;
 	    border-bottom: 1px solid #FFFFFF;

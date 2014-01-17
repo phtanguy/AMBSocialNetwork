@@ -1,5 +1,6 @@
 package eu.telecom_bretagne.ambSocialNetwork.front.rest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -12,31 +13,29 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.jboss.weld.context.PassivatingContextWrapper;
+
+import com.sun.corba.se.impl.javax.rmi.CORBA.Util;
+
 import eu.telecom_bretagne.ambSocialNetwork.data.dao.UtilisateurDAO;
 import eu.telecom_bretagne.ambSocialNetwork.data.model.Utilisateur;
 import eu.telecom_bretagne.ambSocialNetwork.front.utils.ServicesLocator;
 import eu.telecom_bretagne.ambSocialNetwork.front.utils.ServicesLocatorException;
-
-//import eu.telecom_bretagne.cabinet_recrutement.data.model.Candidature;
-//import eu.telecom_bretagne.cabinet_recrutement.data.model.Entreprise;
-//import eu.telecom_bretagne.cabinet_recrutement.data.model.OffreEmploi;
-//import eu.telecom_bretagne.cabinet_recrutement.front.utils.ServicesLocator;
-//import eu.telecom_bretagne.cabinet_recrutement.front.utils.ServicesLocatorException;
-//import eu.telecom_bretagne.cabinet_recrutement.service.IServiceCandidature;
-//import eu.telecom_bretagne.cabinet_recrutement.service.IServiceEntreprise;
-//import eu.telecom_bretagne.cabinet_recrutement.service.IServiceOffreEmploi;
+import eu.telecom_bretagne.ambSocialNetwork.service.IServiceUtilisateur;
 
 @Path("/utilisateur")
 public class UtilisateurREST
 {
   //-----------------------------------------------------------------------------
-  private static UtilisateurDAO utilisateurDAO;
+  //private static UtilisateurDAO utilisateurDAO;
+  private static IServiceUtilisateur serviceUtilisateur;
   static
   {
     try
     {
-      utilisateurDAO = (UtilisateurDAO) ServicesLocator.getInstance().getRemoteInterface("UtilisateurDAO");
-      System.out.println("####### Classe UtilisateurREST : composant UtilisateurDAO récupéré !");
+      //utilisateurDAO     = (UtilisateurDAO)     ServicesLocator.getInstance().getRemoteInterface("UtilisateurDAO");
+      serviceUtilisateur = (IServiceUtilisateur) ServicesLocator.getInstance().getRemoteInterface("ServiceUtilisateur");
+      System.out.println("####### Classe UtilisateurREST : composants EJB récupérés !");
       
     }
     catch (ServicesLocatorException e)
@@ -51,8 +50,15 @@ public class UtilisateurREST
   @Path("/HelloHtml")
   public String sayHtmlHello()
   {
-    return "<html> " + "<title>" + "Hello Jersey" + "</title>" + "<body><h1>"
-        + "Hello Jersey" + "</body></h1>" + "</html> ";
+    return "<html>"
+         + "  <head>"
+         + "    <title>Hello from UtilisateurREST</title>"
+         + "    <link rel=\"stylesheet\" href=\"/AMBSocialNetworkServerWeb/styles.css\" type=\"text/css\" />"
+         + "  </head>"
+         + "  <body>"
+         + "    <h2>Hello from UtilisateurREST</h2>"
+         + "  </body>"
+         + "</html> ";
   }
   //-----------------------------------------------------------------------------
   @GET
@@ -63,7 +69,7 @@ public class UtilisateurREST
     String separateur = "---------------------------------------------------------\n";
     String s = separateur;
     
-    for(Utilisateur u : utilisateurDAO.findAll())
+    for(Utilisateur u : serviceUtilisateur.listeDesUtilisateurs())
     {
       s += u + "\n";
     }
@@ -76,16 +82,19 @@ public class UtilisateurREST
   @Produces(MediaType.APPLICATION_JSON)
   public List<Utilisateur> getUtilisateurs_JSON()
   {
-    List<Utilisateur> utilisateurs1 = utilisateurDAO.findAll();
-//    List<Entreprise> entreprisesResultat = new ArrayList<Entreprise>();
-//    for(Entreprise e : entreprises1)
-//    {
-//      e.setOffresEmploi(null);
-//      entreprisesResultat.add(e);
-//    }
-    
-//    return entreprisesResultat;
-    return utilisateurs1;
+    List<Utilisateur> utilisateurs = serviceUtilisateur.listeDesUtilisateurs();
+    System.out.println("-----------------------------> utilisateurs.size() = " + utilisateurs.size());
+    List<Utilisateur> utilisateursResultat = new ArrayList<Utilisateur>();
+    for(Utilisateur u : utilisateurs)
+    {
+      // Si on ne met pas à jour les structures de données internes (elles sont renseignées
+      // puisque le FetchType est positionné à EAGER), on a une erreur. 
+      u.setCommentaires(null);
+      u.setUtilisateurs1(null);
+      u.setUtilisateurs2(null);
+      utilisateursResultat.add(u);
+    }
+    return utilisateursResultat;
   }
   //-----------------------------------------------------------------------------
   @GET
@@ -93,9 +102,12 @@ public class UtilisateurREST
   @Path("{id}")
   public Utilisateur getUtilisateurById_JSON(@PathParam("id") int id)
   {
-    Utilisateur utilisateur = utilisateurDAO.findById(id);
-    //utilisateur.setUtilisateurs1(new ArrayList<Utilisateur>());
-    //utilisateur.setUtilisateurs2(new ArrayList<Utilisateur>());
+    Utilisateur utilisateur = serviceUtilisateur.getUtilisateur(id);
+    // Si on ne met pas à jour les structures de données internes (elles sont renseignées
+    // puisque le FetchType est positionné à EAGER), on a une erreur. 
+    utilisateur.setCommentaires(null);
+    utilisateur.setUtilisateurs1(null);
+    utilisateur.setUtilisateurs2(null);
     return utilisateur;
   }
   //-----------------------------------------------------------------------------
@@ -109,69 +121,23 @@ public class UtilisateurREST
                                   @FormParam("mot_de_passe") String motDePasse,
                                   @FormParam("description")  String description)
   {
-    System.out.println("Tentative de référencement d'un nouvel utilisateur :");
-    System.out.println("  - nom         = " + nom);
-    System.out.println("  - prénom      = " + prenom);
-    System.out.println("  - email       = " + email);
-    System.out.println("  - motDePasse  = " + motDePasse);
-    System.out.println("  - description = " + description);
-    Utilisateur utilisateur = new Utilisateur();
-    utilisateur.setNom(nom);
-    utilisateur.setPrenom(prenom);
-    utilisateur.setEmail(email);
-    utilisateur.setMotDePasse(motDePasse);
-    utilisateur.setDescription(description);
-    return (utilisateurDAO.persist(utilisateur)).toString();
+    Utilisateur utilisateur = serviceUtilisateur.nouvelUtilisateur(nom, prenom, email, motDePasse, description);
+    return utilisateur.toString();
   }
   //-----------------------------------------------------------------------------
-
-  
-  
-  
-  
-  
-  
-//	//-----------------------------------------------------------------------------
-//	@GET
-//	@Produces(MediaType.TEXT_PLAIN)
-//	@Path("/text/{id}")
-//	public String getEntrepriseById_TEXT(@PathParam("id") int id)
-//	{
-//		Entreprise e = serviceEntreprise.getEntreprise(id);
-//		return 
-//				
-//				"NOM DE L'ENTREPRISE :\n" +
-//				"-------------------\n" +
-//				"(" + e.getId() + ") " + e.getNom() + "\n\n" +
-//				"DESCRIPTIF :\n" +
-//				"----------\n" +
-//				e.getDescriptif() + "\n\n" +
-//				"ADRESSE POSTALE :\n" +
-//				"---------------\n" +
-//				e.getAdressePostale() + "\n\n" +
-//				"NOMBRE D'OFFRES D'EMPLOI RÉFÉRENCÉES :\n" +
-//				"------------------------------------\n" +
-//				e.getOffresEmploi().size();
-//	}
-//	//-----------------------------------------------------------------------------
-//  // This method is called if XML is request
-//	@GET
-//	@Produces(MediaType.TEXT_XML)
-//	@Path("/xml")
-//	public String sayXMLHello()
-//	{
-//		String xml = "<?xml version=\"1.0\"?>" +
-//				         "<entreprises>";
-//		for(Entreprise e : serviceEntreprise.listeDesEntreprises())
-//		{
-//			xml += "<entreprise>" +
-//					   "<id>"+e.getId()+"</id>" +
-//					   "<nom>"+e.getNom()+"</nom>" +
-//					   "<descriptif>"+e.getDescriptif().replace("&", "&amp;")+"</descriptif>" +
-//					   	"<adresse>"+e.getAdressePostale()+"</adresse>" +
-//					   	"</entreprise>";
-//		}
-//		xml += "</entreprises>";
-//		return xml;
-//	}
+  @POST
+  @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+  //@Produces(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.TEXT_PLAIN)
+  @Path("/authentification")
+  public int authentification(@FormParam("email")        String email,
+                              @FormParam("mot_de_passe") String motDePasse)
+  {
+    System.out.println("----------------------> " + email + "/" + motDePasse);
+    Utilisateur u = serviceUtilisateur.authentification(email, motDePasse);
+    System.out.println("----------------------> " + u);
+    //return u.toString();
+    return (u==null?-1:u.getId());
+  }
+  //-----------------------------------------------------------------------------
 }
