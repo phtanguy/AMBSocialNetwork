@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:web="http://java.sun.com/xml/ns/javaee" 
+         xmlns="http://java.sun.com/xml/ns/javaee" 
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
+         id="WebApp_ID" 
+         version="3.0">
+         
+  <display-name>CabinetRecrutement_WEB</display-name>
+  
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  
+  <context-param>
+    <param-name>URL_BASE</param-name>
+    <param-value>http://localhost:8080</param-value>
+  </context-param>
+  
+  <!--
+    Pour la fonctionnalite Web Services REST :
+    Utilisation de l'implementation de reference JERSEY fournie par Oracle
+    et disponible par defaut dans Glassfish.
+    
+    Les librairies sont ajoutees automatiquement au projet Web par l'ajout
+    du Project Facet "JAX-RS (REST Web Services) 2.0".
+    
+    La declaration de la servlet qui traite les requetes Web Service REST
+    est alors automatiquement ajoutee au fichier de deploiement de l'appli
+    Web (web.xml).
+    Attention : bug (Elipse ? pour l'intégration de Jersey 2.0), le nom de
+    la classe indiqué pour la servlet (ServletContainer) n'est pas bon
+    (mauvais nom de package). 
+    
+    Les classes qui implémentent les Web Services (celles qui possèdent
+    l'annotation @Path(...) ) sont automatiquement scannees au démarrage
+    de l'application.
+    Attention : bug n° 2 (toujours Elipse ?), il faut indiquer le paramètre
+    "jersey.config.server.provider.package" qui précise l'endroit où les
+    classes REST (@Path) se situent. Par défaut, ce paramètre d'initialisation
+    n'est pas ajouté.
+  -->
+  <servlet>
+    <description>JAX-RS Tools Generated - Do not modify</description>
+    <servlet-name>JAX-RS Servlet</servlet-name>
+    <!--
+      Nom de la classe modifié par rapport à la classe indiqué.
+      <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+    -->
+    <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+    
+    <!--
+      Paramètre non ajouté par défaut !!!
+      Trouvé sur http://richardchesterwood.blogspot.fr/2013/07/running-our-javaee-course-on-glassfish-4.html
+      Valeur : package qui doit être analysée au lancement afin de trouvé les
+      classes annotées avec @Path.
+      Note : marche avec "eu" mais à ce moment, tout est analysé, pas utile.
+    -->
+    <init-param>
+      <param-name>jersey.config.server.provider.packages</param-name>
+      <param-value>eu.telecom_bretagne.ambSocialNetwork.front.rest</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>JAX-RS Servlet</servlet-name>
+    <url-pattern>/RestWebServices/*</url-pattern>
+  </servlet-mapping>
+  
+</web-app>
