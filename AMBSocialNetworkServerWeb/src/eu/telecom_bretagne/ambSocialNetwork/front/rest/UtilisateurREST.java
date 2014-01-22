@@ -140,4 +140,55 @@ public class UtilisateurREST
     return (u==null?-1:u.getId());
   }
   //-----------------------------------------------------------------------------
+  @POST
+  @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("/update")
+  public Utilisateur updateUtilisateur(@FormParam("id")                      String id,
+                                       @FormParam("nom")                     String nom,
+                                       @FormParam("prenom")                  String prenom,
+                                       @FormParam("email")                   String email,
+                                       @FormParam("mot_de_passe")            String motDePasse,
+                                       @FormParam("url_avatar")              String urlAvatar, 
+                                       @FormParam("description")             String description,
+                                       @FormParam("partage_position")        String partagePosition,
+                                       @FormParam("partage_position_public") String partagePositionPublic)
+                                       //@FormParam("latitude")                String latitude,
+                                       //@FormParam("longitude")               String longitude,
+                                       //@FormParam("cap")                     String cap,
+                                       //@FormParam("vitesse")                 String vitesse)
+  {
+    System.out.println("---------------------------------> id                    = " + id);
+    System.out.println("---------------------------------> nom                   = " + nom);
+    System.out.println("---------------------------------> prenom                = " + prenom);
+    System.out.println("---------------------------------> prenom                = " + prenom);
+    System.out.println("---------------------------------> motDePasse            = " + motDePasse);
+    System.out.println("---------------------------------> urlAvatar             = " + urlAvatar);
+    System.out.println("---------------------------------> description           = " + description);
+    System.out.println("---------------------------------> partagePosition       = " + partagePosition);
+    System.out.println("---------------------------------> partagePositionPublic = " + partagePositionPublic);
+    //System.out.println("---------------------------------> latitude              = " + latitude);
+    //System.out.println("---------------------------------> longitude             = " + longitude);
+    //System.out.println("---------------------------------> cap                   = " + cap);
+    //System.out.println("---------------------------------> vitesse               = " + vitesse);
+    
+    Utilisateur u = serviceUtilisateur.miseAJour(Integer.parseInt(id),
+                                        (nom.equals("")?null:nom),
+                                        (prenom.equals("")?null:prenom),
+                                        (email.equals("")?null:email),
+                                        (motDePasse.equals("")?null:motDePasse),
+                                        (urlAvatar.equals("")?null:urlAvatar),
+                                        (description.equals("")?null:description),
+                                        (partagePosition.equals("")?false:Boolean.parseBoolean(partagePosition)),
+                                        (partagePositionPublic.equals("")?false:Boolean.parseBoolean(partagePositionPublic)));
+                                        //(latitude.equals("")?-1:Float.parseFloat(latitude)),
+                                        //(longitude.equals("")?-1:Float.parseFloat(longitude)),
+                                        //(cap.equals("")?-1:Integer.parseInt(cap)),
+                                        //(vitesse.equals("")?-1:Integer.parseInt(vitesse)));
+    u.setCommentaires(null);
+    u.setUtilisateurs1(null);
+    u.setUtilisateurs2(null);
+    return u;
+  }
+  //-----------------------------------------------------------------------------
 }
