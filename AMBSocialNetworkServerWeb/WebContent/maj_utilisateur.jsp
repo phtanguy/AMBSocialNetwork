@@ -1,0 +1,52 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <title>Mise à jour d'un utilisateur</title>
+    <link rel="stylesheet" href="styles.css" type="text/css" />
+  </head>
+  
+  <body>
+    <h2>Mise à jour d'un utilisateur</h2>
+    
+    <form action="RestWebServices/utilisateur/new" method="post">
+      <table id="affichage">
+        <tr>
+          <th style="width: 170px;">Nom :</th>
+          <td>
+            <input type="text" name="nom" size="20" maxlength="30" value="nom-par-défaut">
+          </td>
+        </tr>
+        <tr>
+          <th style="width: 170px;">Prénom :</th>
+          <td>
+            <input type="text" name="prenom" size="20" maxlength="30" value="prénom-par-défaut">
+          </td>
+        </tr>
+        <tr>
+          <th style="width: 170px;">Email :</th>
+          <td>
+            <input type="text" name="email" size="20" maxlength="70" value="email-par-défaut">
+          </td>
+        </tr>
+        <tr>
+          <th style="width: 170px;">Mot de passe :</th>
+          <td>
+            <input type="text" name="mot_de_passe" size="10" maxlength="10" value="amb">
+          </td>
+        </tr>
+        <tr>
+          <th>Description :</th>
+          <td>
+            <textarea rows="7" cols="70" name="description">Description-par-défaut</textarea>
+          </td>
+        </tr>
+    </table>
+      <p>
+        <input type="submit" value="Enregistrer"/>
+      </p>
+    </form>
+  
+  </body>
+  
+</html>

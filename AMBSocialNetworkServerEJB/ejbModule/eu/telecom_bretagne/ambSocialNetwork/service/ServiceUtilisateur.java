@@ -48,7 +48,7 @@ public class ServiceUtilisateur implements IServiceUtilisateur
     utilisateur.setCap(cap);
     utilisateur.setVitesse(vitesse);
     
-    return utilisateur;
+    return utilisateurDAO.persist(utilisateur);
   }
   //-----------------------------------------------------------------------------
   @Override
