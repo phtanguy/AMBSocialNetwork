@@ -29,12 +29,10 @@ create table utilisateur
   description               text,
   partage_position          boolean default false,
   partage_position_public   boolean default false,
-  --latitude                  varchar(10),
-  --longitude                 varchar(11),
-  latitude                  real,
-  longitude                 real,
-  cap                       integer,
-  vitesse                   integer
+  latitude                  real default -1,
+  longitude                 real default -1,
+  cap                       integer default -1,
+  vitesse                   integer default -1
 );
 
 -- Commentaires table "utilisateur" :

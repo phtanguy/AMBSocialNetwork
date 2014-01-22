@@ -71,6 +71,12 @@ public class ServiceUtilisateur implements IServiceUtilisateur
   {
     return utilisateurDAO.findById(id);
   }
+  @Override
+  //-----------------------------------------------------------------------------
+  public Utilisateur getUtilisateur(String email)
+  {
+    return utilisateurDAO.findByEmail(email);
+  }
   //-----------------------------------------------------------------------------
   @Override
   public void effaceUtilisateur(int id)
@@ -98,4 +104,28 @@ public class ServiceUtilisateur implements IServiceUtilisateur
     return utilisateur.getUtilisateurs1();
   }
   //-----------------------------------------------------------------------------
+  @Override
+  public Utilisateur miseAJour(int id,
+                               String nom, String prenom,
+                               String email, String motDePasse,
+                               String  urlAvatar, String description,
+                               boolean partagePosition, boolean partagePositionPublic)
+                               //float latitude, float longitude, int cap, int vitesse)
+  {
+    Utilisateur utilisateur = getUtilisateur(id);
+    utilisateur.setNom(nom);
+    utilisateur.setPrenom(prenom);
+    utilisateur.setEmail(email);
+    utilisateur.setMotDePasse(motDePasse);
+    utilisateur.setUrlAvatar(urlAvatar);
+    utilisateur.setDescription(description);
+    utilisateur.setPartagePosition(partagePosition);
+    utilisateur.setPartagePositionPublic(partagePositionPublic);
+    //utilisateur.setLatitude(latitude);
+    //utilisateur.setLongitude(longitude);
+    //utilisateur.setCap(cap);
+    //utilisateur.setVitesse(vitesse);
+    
+    return utilisateurDAO.update(utilisateur);
+  }
 }

@@ -48,6 +48,17 @@ public class UtilisateurDAO
     return entityManager.find(Utilisateur.class, id);
   }
   //----------------------------------------------------------------------------
+  public Utilisateur findByEmail(String email)
+  {
+    Query query = entityManager.createQuery("select utilisateur from Utilisateur utilisateur where utilisateur.email = :email");
+    query.setParameter("email",      email);
+    @SuppressWarnings("rawtypes")
+    List l = query.getResultList();
+    if(l.size() == 0)
+      return null;
+    return (Utilisateur) l.get(0);
+  }
+  //----------------------------------------------------------------------------
   public Utilisateur findByEmailAndPassword(String email, String motDePasse)
   {
     Query query = entityManager.createQuery("select utilisateur from Utilisateur utilisateur where utilisateur.email = :email and utilisateur.motDePasse = :motDePasse");
