@@ -9,5 +9,7 @@
     <string name="title_activity_page2">Page2Activity</string>
     <string name="bouton_accueil">Retour à l\'accueil</string>
     <string name="quitter">Quitter</string>
+    <string name="title_activity_liste_utilisateurs">ListeUtilisateursActivity</string>
+    <string name="btnListeUtilisateurs">Liste des utilisateurs</string>
 
 </resources>

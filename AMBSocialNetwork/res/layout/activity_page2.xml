@@ -9,19 +9,20 @@
     tools:context=".Page2Activity" >
 
     <Button
-        android:id="@+id/buttonAccesPage2"
+        android:id="@+id/boutonAccueil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:text="@string/bouton_accueil" />
 
-    <ImageView
-        android:id="@+id/imageView1"
+    <Button
+        android:id="@+id/buttonListeUtilisateurs"
+        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/almanach_2014" />
+        android:text="@string/btnListeUtilisateurs" />
 
 </RelativeLayout>

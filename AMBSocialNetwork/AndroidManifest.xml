@@ -26,6 +26,10 @@
             android:name="eu.telecom_bretagne.ambsocialnetwork.Page2Activity"
             android:label="@string/title_activity_page2" >
         </activity>
+        <activity
+            android:name="eu.telecom_bretagne.ambsocialnetwork.ListeUtilisateursActivity"
+            android:label="@string/title_activity_liste_utilisateurs" >
+        </activity>
     </application>
 
 </manifest>
