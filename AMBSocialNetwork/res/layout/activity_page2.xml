@@ -25,4 +25,13 @@
         android:layout_centerHorizontal="true"
         android:text="@string/btnListeUtilisateurs" />
 
+    <Button
+        android:id="@+id/boutonConnexion"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonListeUtilisateurs"
+        android:layout_centerHorizontal="true"
+        android:text="Connexion" />
+
 </RelativeLayout>

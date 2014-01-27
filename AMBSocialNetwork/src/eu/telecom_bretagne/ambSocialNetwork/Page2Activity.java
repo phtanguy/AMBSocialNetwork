@@ -41,6 +41,16 @@ public class Page2Activity extends Activity implements OnClickListener
         finish();
       }
     });
+    
+    Button btnConnexion = (Button) findViewById(R.id.boutonConnexion);
+    btnConnexion.setOnClickListener(new OnClickListener()
+    {
+      @Override
+      public void onClick(View v)
+      {
+        new LoginDialog(myContext);
+      }
+    });
   }
 
   @Override
