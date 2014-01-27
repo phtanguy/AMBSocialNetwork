@@ -10,7 +10,7 @@
     tools:context=".MainActivity" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/textViewListeUtilisateursJSON"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -23,9 +23,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/buttonAccesPage2"
-        android:layout_alignLeft="@+id/textView1"
+        android:layout_alignLeft="@+id/textViewListeUtilisateursJSON"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/textView1"
+        android:layout_below="@+id/textViewListeUtilisateursJSON"
         android:src="@drawable/alamanch_vieux" />
 
     <Button

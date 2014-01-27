@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -64,10 +65,12 @@ public class Page2Activity extends Activity implements OnClickListener
 
   //-----------------------------------------------------------------------------
   protected class ChargementUtilisateursAsyncTask extends AsyncTask<String, Integer, UtilisateursList>
+  //protected class ChargementUtilisateursAsyncTask extends AsyncTask<String, Integer, String>
   {
     //....................................................................
     @Override
     protected UtilisateursList doInBackground(String... params)
+    //protected String doInBackground(String... params)
     {
       UtilisateurController utilisateurController = UtilisateurController.getInstance();
       try
@@ -77,7 +80,10 @@ public class Page2Activity extends Activity implements OnClickListener
         // Log.d("Cabinet de recrutement", entrepriseController.findByIdJson(7).toString());
         // Log.d("Cabinet de recrutement", entrepriseController.findByIdText(7));
         
+        Log.d("AMBSocialNetwork", "-----------------------------> " + utilisateurController.findAllJson().getClass().getName());
+        
         return utilisateurController.findAllJson();
+        //return utilisateurController.findAllText();
       }
       catch (IOException e)
       {
@@ -89,8 +95,10 @@ public class Page2Activity extends Activity implements OnClickListener
     //....................................................................
     @Override
     protected void onPostExecute(UtilisateursList response)
+    //protected void onPostExecute(String response)
     {
-      Intent afficheListeUtilisateurs = new Intent(myContext, Page2Activity.class);
+      Intent afficheListeUtilisateurs = new Intent(myContext, ListeUtilisateursActivity.class);
+      //Intent afficheListeUtilisateurs = new Intent(myContext, String.class);
       afficheListeUtilisateurs.putExtra("contenuAAfficher", response);
 
       progressDialog.dismiss();

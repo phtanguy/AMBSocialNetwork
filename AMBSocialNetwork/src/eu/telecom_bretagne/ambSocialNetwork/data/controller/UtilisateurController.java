@@ -20,9 +20,9 @@ public class UtilisateurController
   //-----------------------------------------------------------------------------
   private static UtilisateurController instance = null;
   
-  //private static final String hostname = "10.29.226.130";
-  private static final String hostname = "192.168.1.7";
-  private static final String URL_UTILISATEUR_JSON = "  ";
+  private static final String hostname = "10.29.226.130";
+  //private static final String hostname = "192.168.1.7";
+  private static final String URL_UTILISATEUR_JSON = "http://" + hostname + ":8080/AMBSocialNetworkServerWeb/RestWebServices/utilisateur";
   
   private static ObjectMapper oMapper;
   private static JsonFactory  jFactory;
