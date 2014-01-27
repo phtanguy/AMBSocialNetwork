@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="eu.telecom_bretagne.ambsocialnetwork"
+    package="eu.telecom_bretagne.ambSocialNetwork"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="eu.telecom_bretagne.ambsocialnetwork.MainActivity"
+            android:name="eu.telecom_bretagne.ambSocialNetwork.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,11 +23,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="eu.telecom_bretagne.ambsocialnetwork.Page2Activity"
+            android:name="eu.telecom_bretagne.ambSocialNetwork.Page2Activity"
             android:label="@string/title_activity_page2" >
         </activity>
         <activity
-            android:name="eu.telecom_bretagne.ambsocialnetwork.ListeUtilisateursActivity"
+            android:name="eu.telecom_bretagne.ambSocialNetwork.ListeUtilisateursActivity"
             android:label="@string/title_activity_liste_utilisateurs" >
         </activity>
     </application>

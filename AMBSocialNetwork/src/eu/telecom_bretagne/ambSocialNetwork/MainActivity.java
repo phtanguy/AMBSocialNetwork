@@ -1,4 +1,4 @@
-package eu.telecom_bretagne.ambsocialnetwork;
+package eu.telecom_bretagne.ambSocialNetwork;
 
 import android.os.Bundle;
 import android.app.Activity;

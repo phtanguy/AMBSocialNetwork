@@ -1,9 +1,14 @@
-package eu.telecom_bretagne.ambsocialnetwork;
+package eu.telecom_bretagne.ambSocialNetwork;
 
+import java.io.IOException;
+
+import eu.telecom_bretagne.ambSocialNetwork.data.controller.UtilisateurController;
+import eu.telecom_bretagne.ambSocialNetwork.data.model.UtilisateursList;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
@@ -12,13 +17,16 @@ import android.widget.Button;
 
 public class Page2Activity extends Activity implements OnClickListener
 {
+  // -----------------------------------------------------------------------------
   private   ProgressDialog progressDialog = null;
-
+  protected Context        myContext;
+  // -----------------------------------------------------------------------------
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_page2);
+    myContext = this;
     
     Button btbListeUtilisateurs = (Button) findViewById(R.id.buttonListeUtilisateurs);
     btbListeUtilisateurs.setOnClickListener(this);
@@ -55,13 +63,13 @@ public class Page2Activity extends Activity implements OnClickListener
 
 
   //-----------------------------------------------------------------------------
-  protected class ChargementUtilisateursAsyncTask extends AsyncTask<String, Integer, EntreprisesList>
+  protected class ChargementUtilisateursAsyncTask extends AsyncTask<String, Integer, UtilisateursList>
   {
     //....................................................................
     @Override
-    protected EntreprisesList doInBackground(String... params)
+    protected UtilisateursList doInBackground(String... params)
     {
-      EntrepriseController entrepriseController = EntrepriseController.getInstance();
+      UtilisateurController utilisateurController = UtilisateurController.getInstance();
       try
       {
         // Pour tests...
@@ -69,7 +77,7 @@ public class Page2Activity extends Activity implements OnClickListener
         // Log.d("Cabinet de recrutement", entrepriseController.findByIdJson(7).toString());
         // Log.d("Cabinet de recrutement", entrepriseController.findByIdText(7));
         
-        return entrepriseController.findAllJson();
+        return utilisateurController.findAllJson();
       }
       catch (IOException e)
       {
@@ -80,13 +88,13 @@ public class Page2Activity extends Activity implements OnClickListener
     }
     //....................................................................
     @Override
-    protected void onPostExecute(EntreprisesList response)
+    protected void onPostExecute(UtilisateursList response)
     {
-      Intent afficheListeEntreprises = new Intent(myContext, AffichageActivity.class);
-      afficheListeEntreprises.putExtra("contenuAAfficher", response);
+      Intent afficheListeUtilisateurs = new Intent(myContext, Page2Activity.class);
+      afficheListeUtilisateurs.putExtra("contenuAAfficher", response);
 
       progressDialog.dismiss();
-      startActivity(afficheListeEntreprises);
+      startActivity(afficheListeUtilisateurs);
     }
     //....................................................................
   }

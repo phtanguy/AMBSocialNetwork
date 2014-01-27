@@ -1,4 +1,4 @@
-package eu.telecom_bretagne.ambsocialnetwork.data.controller;
+package eu.telecom_bretagne.ambSocialNetwork.data.controller;
 
 import java.io.IOException;
 
@@ -10,16 +10,19 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
 import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import eu.telecom_bretagne.ambSocialNetwork.data.model.UtilisateursList;
 
 public class UtilisateurController
 {
   //-----------------------------------------------------------------------------
   private static UtilisateurController instance = null;
   
-  private static final String hostname = "10.29.226.130";
-  //private static final String hostname = "192.168.1.7";
-  private static final String URL_UTILISATEUR_JSON = "http://" + hostname + ":8080/AMBSocialNetworkServerWeb/RestWebServices/utilisateur";
+  //private static final String hostname = "10.29.226.130";
+  private static final String hostname = "192.168.1.7";
+  private static final String URL_UTILISATEUR_JSON = "  ";
   
   private static ObjectMapper oMapper;
   private static JsonFactory  jFactory;
@@ -59,5 +62,13 @@ public class UtilisateurController
     return result;
   }
   //-----------------------------------------------------------------------------
-
+  public UtilisateursList findAllJson() throws IOException
+  {
+    String jsonData = downloadContent(URL_UTILISATEUR_JSON);
+    JsonParser   jParser  = jFactory.createJsonParser(jsonData);
+    UtilisateursList ul = oMapper.readValue(jParser, UtilisateursList.class);
+    return ul;
+    //return oMapper.readValue(jParser, EntreprisesList.class);
+  }
+  //-----------------------------------------------------------------------------
 }
