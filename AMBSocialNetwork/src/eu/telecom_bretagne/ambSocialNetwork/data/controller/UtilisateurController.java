@@ -20,12 +20,12 @@ public class UtilisateurController
   //-----------------------------------------------------------------------------
   private static UtilisateurController instance = null;
   
-  private static final String hostname = "192.108.117.199";   // @IP srv-labs-006
-  private static final String port     = "80";
-  /*
-  private static final String hostname = "10.29.226.130";     // @IP Télécom Bretagne
   private static final String hostname = "192.168.1.7";       // @IP Maison
   private static final String port     = "8080";
+  /*
+  private static final String hostname = "10.29.226.130";     // @IP Télécom Bretagne
+  private static final String hostname = "192.108.117.199";   // @IP srv-labs-006
+  private static final String port     = "80";
    */
   private static final String URL_UTILISATEUR_JSON = "http://" + hostname + ":" + port + "/AMBSocialNetworkServerWeb/RestWebServices/utilisateur";
   
