@@ -1,7 +1,10 @@
-package eu.telecom_bretagne.ambSocialNetwork;
+package eu.telecom_bretagne.ambSocialNetwork.front.android;
 
 //import turpin.mathieu.almanachdumarinbreton.R;
 
+import eu.telecom_bretagne.ambSocialNetwork.R;
+import eu.telecom_bretagne.ambSocialNetwork.R.id;
+import eu.telecom_bretagne.ambSocialNetwork.R.layout;
 import android.app.Dialog;
 import android.content.Context;
 import android.view.View;

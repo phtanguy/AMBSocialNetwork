@@ -1,7 +1,11 @@
-package eu.telecom_bretagne.ambSocialNetwork;
+package eu.telecom_bretagne.ambSocialNetwork.front.android;
 
 import java.io.IOException;
 
+import eu.telecom_bretagne.ambSocialNetwork.R;
+import eu.telecom_bretagne.ambSocialNetwork.R.id;
+import eu.telecom_bretagne.ambSocialNetwork.R.layout;
+import eu.telecom_bretagne.ambSocialNetwork.R.menu;
 import eu.telecom_bretagne.ambSocialNetwork.data.controller.UtilisateurController;
 import eu.telecom_bretagne.ambSocialNetwork.data.model.UtilisateursList;
 import android.os.AsyncTask;

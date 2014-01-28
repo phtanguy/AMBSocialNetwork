@@ -15,7 +15,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="eu.telecom_bretagne.ambSocialNetwork.MainActivity"
+            android:name="eu.telecom_bretagne.ambSocialNetwork.front.android.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,11 +24,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="eu.telecom_bretagne.ambSocialNetwork.Page2Activity"
+            android:name="eu.telecom_bretagne.ambSocialNetwork.front.android.Page2Activity"
             android:label="@string/title_activity_page2" >
         </activity>
         <activity
-            android:name="eu.telecom_bretagne.ambSocialNetwork.ListeUtilisateursActivity"
+            android:name="eu.telecom_bretagne.ambSocialNetwork.front.android.ListeUtilisateursActivity"
             android:label="@string/title_activity_liste_utilisateurs" >
         </activity>
     </application>

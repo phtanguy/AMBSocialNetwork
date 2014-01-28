@@ -1,5 +1,9 @@
-package eu.telecom_bretagne.ambSocialNetwork;
+package eu.telecom_bretagne.ambSocialNetwork.front.android;
 
+import eu.telecom_bretagne.ambSocialNetwork.R;
+import eu.telecom_bretagne.ambSocialNetwork.R.id;
+import eu.telecom_bretagne.ambSocialNetwork.R.layout;
+import eu.telecom_bretagne.ambSocialNetwork.R.menu;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
