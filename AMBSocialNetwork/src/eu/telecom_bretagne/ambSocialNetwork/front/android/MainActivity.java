@@ -42,6 +42,7 @@ public class MainActivity extends Activity implements OnClickListener
   public void onClick(View v)
   {
     Intent affichePage2 = new Intent(this,Page2Activity.class);
+    //affichePage2.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
     startActivity(affichePage2);
   }
 

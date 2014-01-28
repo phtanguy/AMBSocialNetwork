@@ -18,10 +18,10 @@ import eu.telecom_bretagne.ambSocialNetwork.data.model.UtilisateursList;
 
 public class Page2Activity extends Activity
 {
-  // -----------------------------------------------------------------------------
+  //-----------------------------------------------------------------------------
   private   ProgressDialog progressDialog = null;
   //protected Context        myContext;
-  // -----------------------------------------------------------------------------
+  //-----------------------------------------------------------------------------
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
