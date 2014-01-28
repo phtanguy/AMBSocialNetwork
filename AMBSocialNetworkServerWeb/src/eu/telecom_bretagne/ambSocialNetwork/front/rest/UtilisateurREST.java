@@ -123,16 +123,24 @@ public class UtilisateurREST
   @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
   //@Produces(MediaType.APPLICATION_JSON)
   @Produces(MediaType.TEXT_PLAIN)
-  @Path("/authentification")
-  public int authentification(@FormParam("email")        String email,
-                              @FormParam("mot_de_passe") String motDePasse)
+  @Path("/authentification_form")
+  public int authentificationForm(@FormParam("email")        String email,
+                                  @FormParam("mot_de_passe") String motDePasse)
   {
-    System.out.println("----------------------> " + email + "/" + motDePasse);
+    System.out.print("---------------------> Appel de authentificationForm(" + email + ", " + motDePasse + ") = ");
     Utilisateur u = serviceUtilisateur.authentification(email, motDePasse);
-    System.out.println("----------------------> " + u);
-    //return u.toString();
+    System.out.println(u);
     return (u==null?-1:u.getId());
   }
+  //-----------------------------------------------------------------------------
+//  @Consumes(MediaType.APPLICATION_JSON)
+//  @Produces(MediaType.TEXT_PLAIN)
+//  @Path("/authentification_json")
+//  public int authentificationJson(String email, String motDePasse)
+//  {
+//    Utilisateur u = serviceUtilisateur.authentification(email, motDePasse);
+//    return (u==null?-1:u.getId());
+//  }
   //-----------------------------------------------------------------------------
   @POST
   @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
