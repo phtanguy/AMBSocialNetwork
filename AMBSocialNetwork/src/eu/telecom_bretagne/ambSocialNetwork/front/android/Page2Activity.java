@@ -2,23 +2,19 @@ package eu.telecom_bretagne.ambSocialNetwork.front.android;
 
 import java.io.IOException;
 
-import eu.telecom_bretagne.ambSocialNetwork.R;
-import eu.telecom_bretagne.ambSocialNetwork.R.id;
-import eu.telecom_bretagne.ambSocialNetwork.R.layout;
-import eu.telecom_bretagne.ambSocialNetwork.R.menu;
-import eu.telecom_bretagne.ambSocialNetwork.data.controller.UtilisateurController;
-import eu.telecom_bretagne.ambSocialNetwork.data.model.UtilisateursList;
-import android.os.AsyncTask;
-import android.os.Bundle;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import eu.telecom_bretagne.ambSocialNetwork.R;
+import eu.telecom_bretagne.ambSocialNetwork.data.controller.UtilisateurController;
+import eu.telecom_bretagne.ambSocialNetwork.data.model.UtilisateursList;
 
 public class Page2Activity extends Activity
 {
@@ -104,8 +100,9 @@ public class Page2Activity extends Activity
     @Override
     protected void onPostExecute(UtilisateursList response)
     {
+      //Intent afficheListeUtilisateurs = new Intent(Page2Activity.this, ListeUtilisateursActivity.class);
       Intent afficheListeUtilisateurs = new Intent(Page2Activity.this, ListeUtilisateursActivity.class);
-      afficheListeUtilisateurs.putExtra("contenuAAfficher", response);
+      afficheListeUtilisateurs.putExtra("listeDesUtilisateurs", response);
 
       progressDialog.dismiss();
       startActivity(afficheListeUtilisateurs);

@@ -32,10 +32,6 @@
             android:name="eu.telecom_bretagne.ambSocialNetwork.front.android.ListeUtilisateursActivity"
             android:label="@string/title_activity_liste_utilisateurs" >
         </activity>
-        <activity
-            android:name="eu.telecom_bretagne.ambSocialNetwork.Liste2UtilisateursActivity"
-            android:label="@string/title_activity_liste2_utilisateurs" >
-        </activity>
     </application>
 
 </manifest>

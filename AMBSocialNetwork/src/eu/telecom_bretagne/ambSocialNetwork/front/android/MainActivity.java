@@ -1,17 +1,13 @@
 package eu.telecom_bretagne.ambSocialNetwork.front.android;
 
-import eu.telecom_bretagne.ambSocialNetwork.R;
-import eu.telecom_bretagne.ambSocialNetwork.R.id;
-import eu.telecom_bretagne.ambSocialNetwork.R.layout;
-import eu.telecom_bretagne.ambSocialNetwork.R.menu;
-import android.os.Bundle;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import eu.telecom_bretagne.ambSocialNetwork.R;
 
 public class MainActivity extends Activity implements OnClickListener
 {

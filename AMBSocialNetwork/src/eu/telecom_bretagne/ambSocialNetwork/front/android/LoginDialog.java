@@ -2,14 +2,12 @@ package eu.telecom_bretagne.ambSocialNetwork.front.android;
 
 //import turpin.mathieu.almanachdumarinbreton.R;
 
-import eu.telecom_bretagne.ambSocialNetwork.R;
-import eu.telecom_bretagne.ambSocialNetwork.R.id;
-import eu.telecom_bretagne.ambSocialNetwork.R.layout;
 import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import eu.telecom_bretagne.ambSocialNetwork.R;
 
 public class LoginDialog extends Dialog{
 		

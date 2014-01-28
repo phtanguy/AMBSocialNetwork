@@ -11,6 +11,5 @@
     <string name="quitter">Quitter</string>
     <string name="title_activity_liste_utilisateurs">ListeUtilisateursActivity</string>
     <string name="btnListeUtilisateurs">Liste des utilisateurs</string>
-    <string name="title_activity_liste2_utilisateurs">Liste2UtilisateursActivity</string>
 
 </resources>

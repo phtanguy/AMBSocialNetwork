@@ -1,56 +1,65 @@
 package eu.telecom_bretagne.ambSocialNetwork.front.android;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
-import eu.telecom_bretagne.ambSocialNetwork.R;
-import eu.telecom_bretagne.ambSocialNetwork.R.id;
-import eu.telecom_bretagne.ambSocialNetwork.R.layout;
-import eu.telecom_bretagne.ambSocialNetwork.R.menu;
-import eu.telecom_bretagne.ambSocialNetwork.data.model.Utilisateur;
-import android.os.Bundle;
-import android.app.Activity;
+import android.app.ListActivity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
-import android.widget.TextView;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+import android.widget.SimpleAdapter;
+import android.widget.ListView;
+import eu.telecom_bretagne.ambSocialNetwork.R;
+import eu.telecom_bretagne.ambSocialNetwork.data.model.Utilisateur;
 
-public class ListeUtilisateursActivity extends Activity
+public class ListeUtilisateursActivity extends ListActivity
 {
-
+  //-----------------------------------------------------------------------------
+  private static final String TAG_ID          = "id_utilisateur";
+  private static final String TAG_NOM_COMPLET = "nom_complet_utilisateur";
+  private static final String TAG_EMAIL       = "email_utilisateur";
+  //-----------------------------------------------------------------------------
   @Override
   protected void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_liste_utilisateurs);
     
-    this.setTitle("Liste des utilisateurs");
+    @SuppressWarnings("unchecked")
+    ArrayList<Utilisateur> utilisateurs = (ArrayList<Utilisateur>) this.getIntent().getExtras().get("listeDesUtilisateurs");
     
-    // Récup l'intent
-    Intent afficheListeUtilisateurs = this.getIntent();
-    TextView affichageResultat = (TextView) findViewById(R.id.textViewListeUtilisateursJSON);
-    
-    ArrayList<Utilisateur> utilisateurs = (ArrayList<Utilisateur>) afficheListeUtilisateurs.getExtras().get("contenuAAfficher");
-    //String utilisateurs = (String) afficheListeUtilisateurs.getExtras().get("contenuAAfficher");
-    
-    //String contenuAAfficher = afficheListeUtilisateurs.getExtras().get("contenuAAfficher").getClass().getName();
-    String contenuAAfficher = "";
+    /**
+     * Updating parsed JSON data into ListView
+     * */
+    ListView lv = getListView();
+    ArrayList<HashMap<String, String>> listeAffichageUtilisateurs = new ArrayList<HashMap<String,String>>();
     for(Utilisateur utilisateur : utilisateurs)
     {
-      contenuAAfficher += "[" + utilisateur.getId() + "] " + utilisateur.getPrenom() + " - " + utilisateur.getNom() + " - " + utilisateur.getEmail() + "\n";
+      HashMap<String,String> utilisateurAffichage = new HashMap<String, String>();
+      utilisateurAffichage.put(TAG_ID,          utilisateur.getId() + "");
+      utilisateurAffichage.put(TAG_NOM_COMPLET, utilisateur.getNom() + " " + utilisateur.getPrenom());
+      utilisateurAffichage.put(TAG_EMAIL,       utilisateur.getEmail());
+      listeAffichageUtilisateurs.add(utilisateurAffichage);
     }
     
-    affichageResultat.setText(contenuAAfficher);
-
-
-
+    ListAdapter adapter = new SimpleAdapter(ListeUtilisateursActivity.this, 
+                                            listeAffichageUtilisateurs,
+                                            R.layout.list_item_utilisateur,
+                                            new String[] { TAG_ID, TAG_NOM_COMPLET, TAG_EMAIL}, 
+                                            new int[] { R.id.id_utilisateur, R.id.nom_complet_utilisateur, R.id.email_utilisateur});
     
-  }
+    lv.setAdapter(adapter);
 
+  }
+  //-----------------------------------------------------------------------------
   @Override
   public boolean onCreateOptionsMenu(Menu menu)
   {
     // Inflate the menu; this adds items to the action bar if it is present.
-    getMenuInflater().inflate(R.menu.liste_utilisateurs, menu);
+    getMenuInflater().inflate(R.menu.liste_utilisateurs2, menu);
     return true;
   }
-
+  //-----------------------------------------------------------------------------
 }
