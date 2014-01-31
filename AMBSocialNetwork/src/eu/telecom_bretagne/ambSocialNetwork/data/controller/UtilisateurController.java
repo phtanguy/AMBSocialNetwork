@@ -23,9 +23,11 @@ import org.apache.http.util.EntityUtils;
 import android.util.Log;
 
 import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import eu.telecom_bretagne.ambSocialNetwork.data.model.Utilisateur;
 import eu.telecom_bretagne.ambSocialNetwork.data.model.UtilisateursList;
 
 public class UtilisateurController
@@ -85,32 +87,67 @@ public class UtilisateurController
     JsonParser   jParser  = jFactory.createParser(jsonData);
     UtilisateursList ul = oMapper.readValue(jParser, UtilisateursList.class);
     return ul;
-    //return oMapper.readValue(jParser, EntreprisesList.class);
   }
   //-----------------------------------------------------------------------------
-  public String authentification(String email, String password) throws ClientProtocolException, IOException
+  public Utilisateur authentification(String email, String password) throws ClientProtocolException, IOException
   {
-    HttpClient client = new DefaultHttpClient(); 
-    HttpPost post = new HttpPost(URL_UTILISATEUR_JSON + "/authentification_form");
+    /*
+     * Plusieurs choses à faire :
+     *   - Préparer une requête POST de type formulaire (la
+     *     requête est l'équivalent d'un formulaire Web)
+     *       . Définir l'URL
+     *       . Encapsuler les paramètres 
+     *   - Envoyer la requête sur le serveur
+     *   - Récupérer le résultat (données au format JSON
+     *     représentant une utilisateur)
+     *   - Convertir les données dans un format objet (classe
+     *     utilisateur).
+     *   
+     */
+    
+    // Réquête POST qui envrerra des données de type formulaire
+    
+    HttpPost post = new HttpPost(URL_UTILISATEUR_JSON + "/authentification");
     post.setHeader("Content-Type",
                    "application/x-www-form-urlencoded;charset=UTF-8");
-      
-    NameValuePair emailPair    = new BasicNameValuePair("email",        email);
-    NameValuePair passwordPair = new BasicNameValuePair("mot_de_passe", password);
+    
+    // Encapsulation des paramètres : le formulaire possède 2 paramètres
+    // (email et mot_de_passe). Attention c'est ici passé en clair mais
+    // c'est peu important dans notre contexte.
+    // Chaque paramètre est représenté dans une instance de NameValuePair
+    // (interface) qui contient un couple (nom du param, valeur). Chaque
+    // couple est ajouté dans une liste (List<NameValuePair>) qui représente
+    // l'ensemble des valeurs.
+    // Ces valeur sont ensuite encodées avant d'être incorporées au POST. 
+    
     List<NameValuePair> values = new ArrayList<NameValuePair>();
-    values.add(emailPair);
-    values.add(passwordPair);
+    values.add(new BasicNameValuePair("email",        email));
+    values.add(new BasicNameValuePair("mot_de_passe", password));
     UrlEncodedFormEntity entity = new UrlEncodedFormEntity(values);
     post.setEntity(entity);
+
+    // Envoi de la requête et récupération de la réponse.
+    
     HttpResponse response = client.execute(post);
+    
+    // Décodage de la réponse.
+    Utilisateur utilisateur = null;
     if(response != null)
     {
-      String resultat = EntityUtils.toString(response.getEntity(), "UTF-8");
-      Log.d("AMBSocialNetwork", "-----------------------------> authentification(" + email + ", " + password + ") = " + resultat);
-
-      return resultat;
+      //String resultat = EntityUtils.toString(response.getEntity(), "UTF-8");
+      String jsonUtilisateurData =  EntityUtils.toString(response.getEntity(), "UTF-8");
+      JsonParser   jParser  = jFactory.createParser(jsonUtilisateurData);
+      try
+      {
+        utilisateur = oMapper.readValue(jParser, Utilisateur.class);
+        Log.d("AMBSocialNetwork", "-----------------------------> authentification(" + email + ", " + password + ") = " + utilisateur);
+      }
+      catch(JsonParseException jpe)
+      {
+        Log.e("AMBSocialNetwork", "-----------------------------> authentification(" + email + ", " + password + ") = erreur, l'utilisateur n'existe pas.");
+      }
     }
-    return null;
+    return utilisateur;
   }
   //-----------------------------------------------------------------------------
 }

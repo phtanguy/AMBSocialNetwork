@@ -70,6 +70,7 @@ public class Page2Activity extends Activity
   }
 
   //-----------------------------------------------------------------------------
+  // extends AsyncTask<Params, Progress, Result>
   protected class ChargementUtilisateursAsyncTask extends AsyncTask<String, Integer, UtilisateursList>
   {
     @Override
@@ -83,6 +84,7 @@ public class Page2Activity extends Activity
       progressDialog.show();
     }
     @Override
+    // doInBackground(Params... params)
     protected UtilisateursList doInBackground(String... params)
     {
       UtilisateurController utilisateurController = UtilisateurController.getInstance();
@@ -98,6 +100,7 @@ public class Page2Activity extends Activity
       return null;
     }
     @Override
+    // onPostExecute(Result response)
     protected void onPostExecute(UtilisateursList response)
     {
       //Intent afficheListeUtilisateurs = new Intent(Page2Activity.this, ListeUtilisateursActivity.class);
