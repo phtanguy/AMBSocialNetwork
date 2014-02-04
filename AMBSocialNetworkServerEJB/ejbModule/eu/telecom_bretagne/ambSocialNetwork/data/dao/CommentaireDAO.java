@@ -8,14 +8,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import eu.telecom_bretagne.ambSocialNetwork.data.model.Utilisateur;
+import eu.telecom_bretagne.ambSocialNetwork.data.model.Commentaire;
 
 /**
- * Session Bean implementation class UtilisateurDAO
+ * Session Bean implementation class CommentaireDAO
  */
 @Stateless
 @LocalBean
-public class UtilisateurDAO
+public class CommentaireDAO
 {
   //-----------------------------------------------------------------------------
   /**
@@ -27,7 +27,7 @@ public class UtilisateurDAO
   /**
    * Default constructor.
    */
-  public UtilisateurDAO()
+  public CommentaireDAO()
   {
     // TODO Auto-generated constructor stub
   }
@@ -37,65 +37,64 @@ public class UtilisateurDAO
    * @param utilisateur bean entity représentant l'instance.
    * @return l'instance de l'utilisateur une fois persistée dans la base de données.
    */
-  public Utilisateur persist(Utilisateur utilisateur)
+  public Commentaire persist(Commentaire commentaire)
   {
-    entityManager.persist(utilisateur);
-    return utilisateur;
+    entityManager.persist(commentaire);
+    return commentaire;
   }
   //----------------------------------------------------------------------------
-  public Utilisateur findById(Integer id)
+  public Commentaire findById(Integer id)
   {
-    return entityManager.find(Utilisateur.class, id);
-  }
-  //----------------------------------------------------------------------------
-  public Utilisateur findByEmail(String email)
-  {
-    Query query = entityManager.createQuery("select utilisateur from Utilisateur utilisateur where utilisateur.email = :email");
-    query.setParameter("email",      email);
-    @SuppressWarnings("rawtypes")
-    List l = query.getResultList();
-    if(l.size() == 0)
-      return null;
-    return (Utilisateur) l.get(0);
-  }
-  //----------------------------------------------------------------------------
-  public Utilisateur findByEmailAndPassword(String email, String motDePasse)
-  {
-    Query query = entityManager.createQuery("select utilisateur from Utilisateur utilisateur where utilisateur.email = :email and utilisateur.motDePasse = :motDePasse");
-    query.setParameter("email",      email);
-    query.setParameter("motDePasse", motDePasse);
-    @SuppressWarnings("rawtypes")
-    List l = query.getResultList();
-    if(l.size() == 0)
-      return null;
-    return (Utilisateur) l.get(0);
+    return entityManager.find(Commentaire.class, id);
   }
   //----------------------------------------------------------------------------
   @SuppressWarnings("unchecked")
-  public List<Utilisateur> findAll()
+  public List<Commentaire> findAllByUtilisateur(int idUtilisateur)
   {
-    Query query = entityManager.createQuery("select utilisateur from Utilisateur utilisateur order by utilisateur.id");
+    Query query = entityManager.createQuery("select c from Commentaire c join c.utilisateurBean u where u.id = :idUtilisateur");
+    query.setParameter("idUtilisateur", idUtilisateur);
+    @SuppressWarnings("rawtypes")
+    List l = query.getResultList();
+    
+    return (List<Commentaire>)l;
+  }
+  //----------------------------------------------------------------------------
+  @SuppressWarnings("unchecked")
+  public List<Commentaire> findAllByCentreInteret(int idCentreInteret)
+  {
+    Query query = entityManager.createQuery("select c from Commentaire c join c.centreInteretBean ci where ci.id = :idCentreInteret");
+    query.setParameter("idCentreInteret", idCentreInteret);
+    @SuppressWarnings("rawtypes")
+    List l = query.getResultList();
+    
+    return (List<Commentaire>)l;
+  }
+  //----------------------------------------------------------------------------
+  @SuppressWarnings("unchecked")
+  public List<Commentaire> findAll()
+  {
+    Query query = entityManager.createQuery("select ci from Commentaire ci order by ci.id");
     @SuppressWarnings("rawtypes")
     List l = query.getResultList(); 
     
-    return (List<Utilisateur>)l;
+    return (List<Commentaire>)l;
   }
   //-----------------------------------------------------------------------------
-  public Utilisateur update(Utilisateur utilisateur)
+  public Commentaire update(Commentaire commentaire)
   {
-    entityManager.merge(utilisateur);
-    return findById(utilisateur.getId());
+    entityManager.merge(commentaire);
+    return findById(commentaire.getId());
   }
   //-----------------------------------------------------------------------------
-  public void remove(Utilisateur utilisateur)
+  public void remove(Commentaire commentaire)
   {
-    if(!entityManager.contains(utilisateur))          // Si l'entité n'est pas dans un état "géré" (managed),
+    if(!entityManager.contains(commentaire))          // Si l'entité n'est pas dans un état "géré" (managed),
     {                                                 // il est impossible de la supprimer directement, erreur "Entity must be managed to call remove"
-      utilisateur = entityManager.merge(utilisateur); // Il faut la "rattacher" au contexte de persistance par l'appel    
+      commentaire = entityManager.merge(commentaire); // Il faut la "rattacher" au contexte de persistance par l'appel    
     }                                                 // de la méthode merge de l'ENtityManager.
     
     // L'entité était déjà attachée ou a été rattachée, on peut donc la supprimer...
-    entityManager.remove(utilisateur);
+    entityManager.remove(commentaire);
   }
   //-----------------------------------------------------------------------------
 }
