@@ -40,6 +40,7 @@
     Les classes qui implémentent les Web Services (celles qui possèdent
     l'annotation @Path(...) ) sont automatiquement scannees au démarrage
     de l'application.
+    
     Attention : bug n° 2 (toujours Elipse ?), il faut indiquer le paramètre
     "jersey.config.server.provider.package" qui précise l'endroit où les
     classes REST (@Path) se situent. Par défaut, ce paramètre d'initialisation

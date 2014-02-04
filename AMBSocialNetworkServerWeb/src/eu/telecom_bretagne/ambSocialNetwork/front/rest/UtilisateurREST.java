@@ -21,13 +21,11 @@ import eu.telecom_bretagne.ambSocialNetwork.service.IServiceUtilisateur;
 public class UtilisateurREST
 {
   //-----------------------------------------------------------------------------
-  //private static UtilisateurDAO utilisateurDAO;
   private static IServiceUtilisateur serviceUtilisateur;
   static
   {
     try
     {
-      //utilisateurDAO     = (UtilisateurDAO)     ServicesLocator.getInstance().getRemoteInterface("UtilisateurDAO");
       serviceUtilisateur = (IServiceUtilisateur) ServicesLocator.getInstance().getRemoteInterface("ServiceUtilisateur");
       System.out.println("####### Classe UtilisateurREST : composants EJB récupérés !");
       
@@ -122,32 +120,18 @@ public class UtilisateurREST
   @POST
   @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
   @Produces(MediaType.APPLICATION_JSON)
-  //@Produces(MediaType.TEXT_PLAIN)
   @Path("/authentification")
-//  public int authentificationForm(@FormParam("email")        String email,
-//                                  @FormParam("mot_de_passe") String motDePasse)
   public Utilisateur authentificationForm(@FormParam("email")        String email,
                                           @FormParam("mot_de_passe") String motDePasse)
   {
     System.out.print("---------------------> Appel de authentificationForm(" + email + ", " + motDePasse + ") = ");
     Utilisateur utilisateur = serviceUtilisateur.authentification(email, motDePasse);
     System.out.println(utilisateur);
-//    return (u==null?-1:u.getId());
     utilisateur.setCommentaires(null);
     utilisateur.setUtilisateurs1(null);
     utilisateur.setUtilisateurs2(null);
     return utilisateur;
-
   }
-  //-----------------------------------------------------------------------------
-//  @Consumes(MediaType.APPLICATION_JSON)
-//  @Produces(MediaType.TEXT_PLAIN)
-//  @Path("/authentification_json")
-//  public int authentificationJson(String email, String motDePasse)
-//  {
-//    Utilisateur u = serviceUtilisateur.authentification(email, motDePasse);
-//    return (u==null?-1:u.getId());
-//  }
   //-----------------------------------------------------------------------------
   @POST
   @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
