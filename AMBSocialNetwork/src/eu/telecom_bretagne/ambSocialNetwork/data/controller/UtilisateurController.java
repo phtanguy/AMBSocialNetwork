@@ -1,14 +1,9 @@
 package eu.telecom_bretagne.ambSocialNetwork.data.controller;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -30,31 +25,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.telecom_bretagne.ambSocialNetwork.data.model.Utilisateur;
 import eu.telecom_bretagne.ambSocialNetwork.data.model.UtilisateursList;
 
-public class UtilisateurController
+public class UtilisateurController extends Controller
 {
   //-----------------------------------------------------------------------------
   private static UtilisateurController instance = null;
   
-  private static final String hostname = "10.29.226.130";     // @IP Télécom Bretagne
-  private static final String port     = "8080";
-  /*
-  private static final String hostname = "192.168.1.7";       // @IP Maison
-  private static final String hostname = "192.108.117.199";   // @IP srv-labs-006
-  private static final String port     = "80";
-   */
-  private static final String URL_UTILISATEUR_JSON = "http://" + hostname + ":" + port + "/AMBSocialNetworkServerWeb/RestWebServices/utilisateur";
-  
-  private static ObjectMapper oMapper;
-  private static JsonFactory  jFactory;
-  
-  private static HttpClient client;
-
+  private static final String URL_UTILISATEUR = URL + "/utilisateur";
   //-----------------------------------------------------------------------------
   private UtilisateurController()
   {
-    oMapper  = new ObjectMapper();
-    jFactory = new JsonFactory();
-    client   = new DefaultHttpClient();
+    super();
   }
   //-----------------------------------------------------------------------------
   public static UtilisateurController getInstance()
@@ -64,26 +44,15 @@ public class UtilisateurController
     return instance;
   }
   //-----------------------------------------------------------------------------
-  private String downloadContent(String url) throws ClientProtocolException, IOException
-  {
-    HttpGet      get = new HttpGet(url);
-    HttpResponse response = client.execute(get);
-    if(response != null)
-    {
-      return EntityUtils.toString(response.getEntity(), "UTF-8");
-    }
-    return null;
-  }
-  //-----------------------------------------------------------------------------
   public String findAllText() throws IOException
   {
-    String result = downloadContent(URL_UTILISATEUR_JSON + "/text");
+    String result = downloadContent(URL_UTILISATEUR + "/text");
     return result;
   }
   //-----------------------------------------------------------------------------
   public UtilisateursList findAllJson() throws IOException
   {
-    String jsonData = downloadContent(URL_UTILISATEUR_JSON);
+    String jsonData = downloadContent(URL_UTILISATEUR);
     JsonParser   jParser  = jFactory.createParser(jsonData);
     UtilisateursList ul = oMapper.readValue(jParser, UtilisateursList.class);
     return ul;
@@ -107,7 +76,7 @@ public class UtilisateurController
     
     // Réquête POST qui envrerra des données de type formulaire
     
-    HttpPost post = new HttpPost(URL_UTILISATEUR_JSON + "/authentification");
+    HttpPost post = new HttpPost(URL_UTILISATEUR + "/authentification");
     post.setHeader("Content-Type",
                    "application/x-www-form-urlencoded;charset=UTF-8");
     
@@ -134,7 +103,6 @@ public class UtilisateurController
     Utilisateur utilisateur = null;
     if(response != null)
     {
-      //String resultat = EntityUtils.toString(response.getEntity(), "UTF-8");
       String jsonUtilisateurData =  EntityUtils.toString(response.getEntity(), "UTF-8");
       JsonParser   jParser  = jFactory.createParser(jsonUtilisateurData);
       try
