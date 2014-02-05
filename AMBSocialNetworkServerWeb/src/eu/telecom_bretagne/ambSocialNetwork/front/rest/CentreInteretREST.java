@@ -103,8 +103,8 @@ public class CentreInteretREST
   @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/getByPosition")
-  public CentreInteret authentificationForm(@FormParam("latitude")  String latitude,
-                                          @FormParam("longitude") String longitude)
+  public CentreInteret getCentreInteretByPosition(@FormParam("latitude")  String latitude,
+                                                  @FormParam("longitude") String longitude)
   {
     CentreInteret centreInteret = serviceCentreInteret.getCentreInteret(latitude, longitude);
     centreInteret.setCommentaires(null);
