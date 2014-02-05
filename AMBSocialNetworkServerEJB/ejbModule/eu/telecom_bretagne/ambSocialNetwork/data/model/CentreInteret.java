@@ -97,4 +97,12 @@ public class CentreInteret implements Serializable {
 		return commentaire;
 	}
 
+  @Override
+  public String toString()
+  {
+    return "CentreInteret [id=" + id + ", description=" + description
+        + ", latitude=" + latitude + ", longitude=" + longitude + ", nom="
+        + nom + "]";
+  }
+
 }
