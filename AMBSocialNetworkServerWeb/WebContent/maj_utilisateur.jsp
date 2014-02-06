@@ -78,7 +78,7 @@
             </td>
           </tr>
           <tr>
-            <th>Description :</th>
+            <th style="width: 170px;">Description :</th>
             <td>
               <textarea rows="7" cols="70" name="description"><%=utilisateur.getDescription()%></textarea>
             </td>

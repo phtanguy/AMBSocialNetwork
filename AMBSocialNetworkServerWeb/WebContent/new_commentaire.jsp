@@ -26,8 +26,8 @@
   <body>
     <h2>Ajout d'un commentaire</h2>
     
-    <form action="RestWebServices/utilisateur/update" method="post">
-      <table id="id_utilisateur">
+    <form action="RestWebServices/centre_interet/new_comment" method="post">
+      <table id="affichage">
         <tr>
           <th style="width: 170px;">Utilisateur :</th>
           <td>
@@ -51,13 +51,30 @@
               for(CentreInteret ci : centresInteret)
               {
                 %>
-                <option value="<%=ci.getId()%>">[<%=ci.getId()%>] <%=ci.getNom() + " " + ci.getDescription()%>
+                <option value="<%=ci.getId()%>">[<%=ci.getId()%>] <%=ci.getNom() + " (description = " + ci.getDescription() + ")"%>
                 <%
               }
               %>
             </select>
           </td>
         </tr>
+        <tr>
+          <th style="width: 170px;">Commentaire :</th>
+          <td>
+            <textarea rows="7" cols="70" name="contenu"></textarea>
+          </td>
+        </tr>
+        <tr>
+          <th style="width: 170px;">Partage :</th>
+          <td>
+            <input type=radio name="partage_public" value="true" checked="checked">Public
+            <input type=radio name="partage_public" value="false">Privé
+          </td>
+        </tr>
       </table>
+      <p>
+        <input type="submit" value="Poster"/>
+      </p>
+    </form>
   </body>
 </html>
