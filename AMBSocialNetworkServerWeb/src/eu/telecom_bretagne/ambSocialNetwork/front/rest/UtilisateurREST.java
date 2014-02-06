@@ -12,7 +12,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import eu.telecom_bretagne.ambSocialNetwork.data.model.DTOUtils;
 import eu.telecom_bretagne.ambSocialNetwork.data.model.Utilisateur;
+import eu.telecom_bretagne.ambSocialNetwork.data.model.UtilisateurDTO;
 import eu.telecom_bretagne.ambSocialNetwork.front.utils.ServicesLocator;
 import eu.telecom_bretagne.ambSocialNetwork.front.utils.ServicesLocatorException;
 import eu.telecom_bretagne.ambSocialNetwork.service.IServiceUtilisateur;
@@ -63,7 +65,7 @@ public class UtilisateurREST
     
     for(Utilisateur u : serviceUtilisateur.listeDesUtilisateurs())
     {
-      s += u + "\n";
+      s += DTOUtils.toDTO(u) + "\n";
     }
     s += separateur;
     
@@ -72,19 +74,14 @@ public class UtilisateurREST
   //-----------------------------------------------------------------------------
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  public List<Utilisateur> getUtilisateurs_JSON()
+  public List<UtilisateurDTO> getUtilisateurs_JSON()
   {
     List<Utilisateur> utilisateurs = serviceUtilisateur.listeDesUtilisateurs();
     System.out.println("-----------------------------> utilisateurs.size() = " + utilisateurs.size());
-    List<Utilisateur> utilisateursResultat = new ArrayList<Utilisateur>();
+    List<UtilisateurDTO> utilisateursResultat = new ArrayList<UtilisateurDTO>();
     for(Utilisateur u : utilisateurs)
     {
-      // Si on ne met pas à jour les structures de données internes (elles sont renseignées
-      // puisque le FetchType est positionné à EAGER), on a une erreur. 
-      u.setCommentaires(null);
-      u.setUtilisateurs1(null);
-      u.setUtilisateurs2(null);
-      utilisateursResultat.add(u);
+      utilisateursResultat.add(DTOUtils.toDTO(u));
     }
     return utilisateursResultat;
   }
@@ -92,15 +89,10 @@ public class UtilisateurREST
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   @Path("{id}")
-  public Utilisateur getUtilisateurById_JSON(@PathParam("id") int id)
+  public UtilisateurDTO getUtilisateurById_JSON(@PathParam("id") int id)
   {
     Utilisateur utilisateur = serviceUtilisateur.getUtilisateur(id);
-    // Si on ne met pas à jour les structures de données internes (elles sont renseignées
-    // puisque le FetchType est positionné à EAGER), on a une erreur. 
-    utilisateur.setCommentaires(null);
-    utilisateur.setUtilisateurs1(null);
-    utilisateur.setUtilisateurs2(null);
-    return utilisateur;
+    return DTOUtils.toDTO(utilisateur);
   }
   //-----------------------------------------------------------------------------
   @POST
@@ -121,35 +113,31 @@ public class UtilisateurREST
   @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/authentification")
-  public Utilisateur authentificationForm(@FormParam("email")        String email,
-                                          @FormParam("mot_de_passe") String motDePasse)
+  public UtilisateurDTO authentificationForm(@FormParam("email")        String email,
+                                             @FormParam("mot_de_passe") String motDePasse)
   {
     System.out.print("---------------------> Appel de authentificationForm(" + email + ", " + motDePasse + ") = ");
     Utilisateur utilisateur = serviceUtilisateur.authentification(email, motDePasse);
-    System.out.println(utilisateur);
-    utilisateur.setCommentaires(null);
-    utilisateur.setUtilisateurs1(null);
-    utilisateur.setUtilisateurs2(null);
-    return utilisateur;
+    return DTOUtils.toDTO(utilisateur);
   }
   //-----------------------------------------------------------------------------
   @POST
   @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/update")
-  public Utilisateur updateUtilisateur(@FormParam("id")                      String id,
-                                       @FormParam("nom")                     String nom,
-                                       @FormParam("prenom")                  String prenom,
-                                       @FormParam("email")                   String email,
-                                       @FormParam("mot_de_passe")            String motDePasse,
-                                       @FormParam("url_avatar")              String urlAvatar, 
-                                       @FormParam("description")             String description,
-                                       @FormParam("partage_position")        String partagePosition,
-                                       @FormParam("partage_position_public") String partagePositionPublic)
-                                       //@FormParam("latitude")                String latitude,
-                                       //@FormParam("longitude")               String longitude,
-                                       //@FormParam("cap")                     String cap,
-                                       //@FormParam("vitesse")                 String vitesse)
+  public UtilisateurDTO updateUtilisateur(@FormParam("id")                      String id,
+                                          @FormParam("nom")                     String nom,
+                                          @FormParam("prenom")                  String prenom,
+                                          @FormParam("email")                   String email,
+                                          @FormParam("mot_de_passe")            String motDePasse,
+                                          @FormParam("url_avatar")              String urlAvatar, 
+                                          @FormParam("description")             String description,
+                                          @FormParam("partage_position")        String partagePosition,
+                                          @FormParam("partage_position_public") String partagePositionPublic)
+                                        //@FormParam("latitude")                String latitude,
+                                        //@FormParam("longitude")               String longitude,
+                                        //@FormParam("cap")                     String cap,
+                                        //@FormParam("vitesse")                 String vitesse)
   {
     System.out.println("---------------------------------> id                    = " + id);
     System.out.println("---------------------------------> nom                   = " + nom);
@@ -178,10 +166,7 @@ public class UtilisateurREST
                                         //(longitude.equals("")?-1:Float.parseFloat(longitude)),
                                         //(cap.equals("")?-1:Integer.parseInt(cap)),
                                         //(vitesse.equals("")?-1:Integer.parseInt(vitesse)));
-    u.setCommentaires(null);
-    u.setUtilisateurs1(null);
-    u.setUtilisateurs2(null);
-    return u;
+    return DTOUtils.toDTO(u);
   }
   //-----------------------------------------------------------------------------
 }

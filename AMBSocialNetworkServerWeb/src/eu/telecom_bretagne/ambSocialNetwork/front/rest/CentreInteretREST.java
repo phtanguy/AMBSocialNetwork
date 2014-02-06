@@ -13,7 +13,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import eu.telecom_bretagne.ambSocialNetwork.data.model.CentreInteret;
+import eu.telecom_bretagne.ambSocialNetwork.data.model.CentreInteretDTO;
 import eu.telecom_bretagne.ambSocialNetwork.data.model.Commentaire;
+import eu.telecom_bretagne.ambSocialNetwork.data.model.CommentaireDTO;
+import eu.telecom_bretagne.ambSocialNetwork.data.model.DTOUtils;
 import eu.telecom_bretagne.ambSocialNetwork.data.model.Utilisateur;
 import eu.telecom_bretagne.ambSocialNetwork.front.utils.ServicesLocator;
 import eu.telecom_bretagne.ambSocialNetwork.front.utils.ServicesLocatorException;
@@ -65,7 +68,7 @@ public class CentreInteretREST
     
     for(CentreInteret ci : serviceCentreInteret.listeDesCentresInteret())
     {
-      s += ci + "\n";
+      s += DTOUtils.toDTO(ci) + "\n";
     }
     s += separateur;
     
@@ -74,16 +77,13 @@ public class CentreInteretREST
   //-----------------------------------------------------------------------------
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  public List<CentreInteret> getUtilisateurs_JSON()
+  public List<CentreInteretDTO> getUtilisateurs_JSON()
   {
-    List<CentreInteret> centresInteret = serviceCentreInteret.listeDesCentresInteret();
-    List<CentreInteret> centresInteretResultat = new ArrayList<CentreInteret>();
+    List<CentreInteret>    centresInteret = serviceCentreInteret.listeDesCentresInteret();
+    List<CentreInteretDTO> centresInteretResultat = new ArrayList<CentreInteretDTO>();
     for(CentreInteret ci : centresInteret)
     {
-      // Si on ne met pas à jour les structures de données internes (elles sont renseignées
-      // puisque le FetchType est positionné à EAGER), on a une erreur.
-      ci.setCommentaires(null);
-      centresInteretResultat.add(ci);
+      centresInteretResultat.add(DTOUtils.toDTO(ci));
     }
     return centresInteretResultat;
   }
@@ -91,45 +91,37 @@ public class CentreInteretREST
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   @Path("{id}")
-  public CentreInteret getCentreInteretById_JSON(@PathParam("id") int id)
+  public CentreInteretDTO getCentreInteretById_JSON(@PathParam("id") int id)
   {
     CentreInteret centreInteret = serviceCentreInteret.getCentreInteret(id);
-    // Si on ne met pas à jour les structures de données internes (elles sont renseignées
-    // puisque le FetchType est positionné à EAGER), on a une erreur. 
-    centreInteret.setCommentaires(null);
-    return centreInteret;
+    return DTOUtils.toDTO(centreInteret);
   }
   //-----------------------------------------------------------------------------
   @POST
   @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/getByPosition")
-  public CentreInteret getCentreInteretByPosition(@FormParam("latitude")  String latitude,
-                                                  @FormParam("longitude") String longitude)
+  public CentreInteretDTO getCentreInteretByPosition(@FormParam("latitude")  String latitude,
+                                                     @FormParam("longitude") String longitude)
   {
     CentreInteret centreInteret = serviceCentreInteret.getCentreInteret(latitude, longitude);
-    centreInteret.setCommentaires(null);
-    return centreInteret;
+    return DTOUtils.toDTO(centreInteret);
   }
   //-----------------------------------------------------------------------------
   @POST
   @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/new_comment")
-  public Commentaire nouveauCommentaire(@FormParam("id_utilisateur")    String idUtilisateur,
-                                        @FormParam("id_centre_interet") String idCentreInteret,
-                                        @FormParam("contenu")           String contenu,
-                                        @FormParam("partage_public")    String partagePublic)
+  public CommentaireDTO nouveauCommentaire(@FormParam("id_utilisateur")    String idUtilisateur,
+                                           @FormParam("id_centre_interet") String idCentreInteret,
+                                           @FormParam("contenu")           String contenu,
+                                           @FormParam("partage_public")    String partagePublic)
   {
-    System.out.println("-----------> nouveauCommentaire(" + idUtilisateur + ", " + idCentreInteret + ", " + contenu + ", " + partagePublic + ")");
     Commentaire commentaire =  serviceCentreInteret.nouveauCommentaire(Integer.parseInt(idUtilisateur),
                                                                        Integer.parseInt(idCentreInteret),
                                                                        contenu,
                                                                        Boolean.parseBoolean(partagePublic));
-    System.out.println("-----------> nouveau commentaire (dans REST)    = " + commentaire);
-    commentaire.setUtilisateurBean(null);
-    commentaire.setCentreInteretBean(null);
-    return commentaire;
+    return DTOUtils.toDTO(commentaire);
   }
   //-----------------------------------------------------------------------------
 }
