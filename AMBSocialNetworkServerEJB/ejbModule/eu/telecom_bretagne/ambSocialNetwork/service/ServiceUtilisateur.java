@@ -35,7 +35,7 @@ public class ServiceUtilisateur implements IServiceUtilisateur
                                        float latitude, float longitude, int cap, int vitesse)
   {
     Utilisateur utilisateur = new Utilisateur();
-    utilisateur.setNom(prenom);                                                   // non null
+    utilisateur.setNom(nom);                                                   // non null
     utilisateur.setPrenom(prenom!=null?(prenom.equals("")?null:prenom):null);
     utilisateur.setEmail(email);                                                  // non null
     utilisateur.setMotDePasse(motDePasse);                                        // non null
