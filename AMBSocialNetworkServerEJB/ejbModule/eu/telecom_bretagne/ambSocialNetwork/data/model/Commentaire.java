@@ -15,7 +15,7 @@ public class Commentaire implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="COMMENTAIRE_ID_GENERATOR", sequenceName="COMMENTAIRE_ID_SEQ", allocationSize=1)
+	@SequenceGenerator(name="COMMENTAIRE_ID_GENERATOR", sequenceName="COMMENTAIRE_ID_SEQ")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="COMMENTAIRE_ID_GENERATOR")
 	private Integer id;
 
@@ -23,9 +23,6 @@ public class Commentaire implements Serializable {
 
 	@Column(name="date_publication")
 	private Timestamp datePublication;
-
-	@Column(name="partage_commentaire")
-	private Boolean partageCommentaire;
 
 	@Column(name="partage_commentaire_public")
 	private Boolean partageCommentairePublic;
@@ -70,14 +67,6 @@ public class Commentaire implements Serializable {
 		this.datePublication = datePublication;
 	}
 
-	public Boolean getPartageCommentaire() {
-		return this.partageCommentaire;
-	}
-
-	public void setPartageCommentaire(Boolean partageCommentaire) {
-		this.partageCommentaire = partageCommentaire;
-	}
-
 	public Boolean getPartageCommentairePublic() {
 		return this.partageCommentairePublic;
 	}
@@ -109,5 +98,11 @@ public class Commentaire implements Serializable {
 	public void setUtilisateurBean(Utilisateur utilisateurBean) {
 		this.utilisateurBean = utilisateurBean;
 	}
+
+  @Override
+  public String toString()
+  {
+    return "Commentaire [id=" + id + ", contenu=" + contenu + ", datePublication=" + datePublication + ", partageCommentairePublic=" + partageCommentairePublic + ", centreInteretBean=" + centreInteretBean.getId() + ", utilisateurBean=" + utilisateurBean.getId() + "]";
+  }
 
 }

@@ -16,7 +16,7 @@ public class CentreInteret implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="CENTRE_INTERET_ID_GENERATOR", sequenceName="CENTRE_INTERET_ID_SEQ", allocationSize=1)
+	@SequenceGenerator(name="CENTRE_INTERET_ID_GENERATOR", sequenceName="CENTRE_INTERET_ID_SEQ")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CENTRE_INTERET_ID_GENERATOR")
 	private Integer id;
 
@@ -29,7 +29,7 @@ public class CentreInteret implements Serializable {
 	private String nom;
 
 	//bi-directional many-to-one association to Commentaire
-	@OneToMany(mappedBy="centreInteretBean")
+	@OneToMany(mappedBy="centreInteretBean", fetch=FetchType.EAGER)
 	private List<Commentaire> commentaires;
 
 	public CentreInteret() {
@@ -100,9 +100,7 @@ public class CentreInteret implements Serializable {
   @Override
   public String toString()
   {
-    return "CentreInteret [id=" + id + ", description=" + description
-        + ", latitude=" + latitude + ", longitude=" + longitude + ", nom="
-        + nom + "]";
+    return "CentreInteret [id=" + id + ", description=" + description + ", latitude=" + latitude + ", longitude=" + longitude + ", nom=" + nom + "]";
   }
 
 }

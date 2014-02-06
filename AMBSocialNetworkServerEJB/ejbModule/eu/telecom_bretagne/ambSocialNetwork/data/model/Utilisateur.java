@@ -1,9 +1,10 @@
 package eu.telecom_bretagne.ambSocialNetwork.data.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.List;
-import static javax.persistence.FetchType.EAGER;
 
 
 /**
@@ -13,11 +14,10 @@ import static javax.persistence.FetchType.EAGER;
 @Entity
 @NamedQuery(name="Utilisateur.findAll", query="SELECT u FROM Utilisateur u")
 public class Utilisateur implements Serializable {
-
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="UTILISATEUR_ID_GENERATOR", sequenceName="UTILISATEUR_ID_SEQ", allocationSize=1)
+	@SequenceGenerator(name="UTILISATEUR_ID_GENERATOR", sequenceName="UTILISATEUR_ID_SEQ")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="UTILISATEUR_ID_GENERATOR")
 	private Integer id;
 
@@ -50,11 +50,11 @@ public class Utilisateur implements Serializable {
 	private Integer vitesse;
 
 	//bi-directional many-to-one association to Commentaire
-	@OneToMany(mappedBy="utilisateurBean")
+	@OneToMany(mappedBy="utilisateurBean", fetch=FetchType.EAGER)
 	private List<Commentaire> commentaires;
 
 	//bi-directional many-to-many association to Utilisateur
-	@ManyToMany(fetch = EAGER)
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(
 		name="est_ami"
 		, joinColumns={
@@ -67,7 +67,7 @@ public class Utilisateur implements Serializable {
 	private List<Utilisateur> utilisateurs1;
 
 	//bi-directional many-to-many association to Utilisateur
-	@ManyToMany(mappedBy="utilisateurs1", fetch = EAGER)
+	@ManyToMany(mappedBy="utilisateurs1", fetch=FetchType.EAGER)
 	private List<Utilisateur> utilisateurs2;
 
 	public Utilisateur() {
@@ -220,4 +220,5 @@ public class Utilisateur implements Serializable {
   {
     return "Utilisateur [id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", email=" + email + ", motDePasse=" + motDePasse + "]";
   }
+
 }

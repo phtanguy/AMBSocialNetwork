@@ -91,13 +91,14 @@ create table commentaire
   contenu                    text,
   url_photo                  varchar(255),
   date_publication           timestamp,
-  partage_commentaire        boolean default false,
+  -- partage_commentaire        boolean default false,
   partage_commentaire_public boolean default true
 );
 
 -- Commentaires table "commentaire" :
 --   * Limitations du partage du commentaire :
 --     Attribut "partage_commentaire" : true (commentaire partagé), false (non).
+--       ==> un commentaire est forcément partagé : soit en public soit en privé.
 --     Attribut "partage_commentaire_public" pris en compte uniquement si le partage
 --     de commentaire est à true : true (partage à tous les utilisateurs), false
 --     (accessible uniquement à la liste d'amis et aux groupes).
