@@ -16,7 +16,7 @@ public class CentreInteret implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="CENTRE_INTERET_ID_GENERATOR", sequenceName="CENTRE_INTERET_ID_SEQ")
+	@SequenceGenerator(name="CENTRE_INTERET_ID_GENERATOR", sequenceName="CENTRE_INTERET_ID_SEQ", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CENTRE_INTERET_ID_GENERATOR")
 	private Integer id;
 
