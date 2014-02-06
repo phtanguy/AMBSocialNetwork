@@ -76,9 +76,6 @@ public class ServiceCentreInteret implements IServiceCentreInteret
     utilisateurDAO.update(utilisateur);
     centreInteretDAO.update(centreInteret);
     
-    
-    System.out.println("-----------> nouveau commentaire (dans service) = " + commentaire);
-    
     return commentaire;
   }
 }
