@@ -5,13 +5,18 @@ import java.util.List;
 import javax.ejb.Remote;
 
 import eu.telecom_bretagne.ambSocialNetwork.data.model.CentreInteret;
+import eu.telecom_bretagne.ambSocialNetwork.data.model.Commentaire;
 
 @Remote
 public interface IServiceCentreInteret
 {
   //-----------------------------------------------------------------------------
-  public CentreInteret getCentreInteret(int id);
-  public CentreInteret getCentreInteret(String latitude, String longitude);
+  public CentreInteret       getCentreInteret(int id);
+  public CentreInteret       getCentreInteret(String latitude, String longitude);
   public List<CentreInteret> listeDesCentresInteret();
+  public Commentaire         nouveauCommentaire(int idUtilisateur,
+                                                int idCentreInteret,
+                                                String contenu,
+                                                boolean partagePublic);
   //-----------------------------------------------------------------------------
 }

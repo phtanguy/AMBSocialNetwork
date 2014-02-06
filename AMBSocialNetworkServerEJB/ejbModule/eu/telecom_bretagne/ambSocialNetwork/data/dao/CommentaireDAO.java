@@ -40,6 +40,7 @@ public class CommentaireDAO
   public Commentaire persist(Commentaire commentaire)
   {
     entityManager.persist(commentaire);
+    System.out.println("-----------> nouveau commentaire (dans DAO)     = " + commentaire);
     return commentaire;
   }
   //----------------------------------------------------------------------------
