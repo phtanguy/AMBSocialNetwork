@@ -17,14 +17,14 @@ public class Commentaire implements Serializable {
 
 	private Timestamp datePublication;
 
-	private Boolean partageCommentaire;
-
 	private Boolean partageCommentairePublic;
 
 	private String urlPhoto;
 
+	//bi-directional many-to-one association to CentreInteret
 	private CentreInteret centreInteretBean;
 
+	//bi-directional many-to-one association to Utilisateur
 	private Utilisateur utilisateurBean;
 
 	public Commentaire() {
@@ -52,14 +52,6 @@ public class Commentaire implements Serializable {
 
 	public void setDatePublication(Timestamp datePublication) {
 		this.datePublication = datePublication;
-	}
-
-	public Boolean getPartageCommentaire() {
-		return this.partageCommentaire;
-	}
-
-	public void setPartageCommentaire(Boolean partageCommentaire) {
-		this.partageCommentaire = partageCommentaire;
 	}
 
 	public Boolean getPartageCommentairePublic() {
@@ -93,5 +85,11 @@ public class Commentaire implements Serializable {
 	public void setUtilisateurBean(Utilisateur utilisateurBean) {
 		this.utilisateurBean = utilisateurBean;
 	}
+
+  @Override
+  public String toString()
+  {
+    return "Commentaire [id=" + id + ", contenu=" + contenu + ", datePublication=" + datePublication + ", partageCommentairePublic=" + partageCommentairePublic + ", centreInteretBean=" + centreInteretBean.getId() + ", utilisateurBean=" + utilisateurBean.getId() + "]";
+  }
 
 }

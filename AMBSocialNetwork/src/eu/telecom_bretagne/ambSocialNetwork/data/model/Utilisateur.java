@@ -1,6 +1,7 @@
 package eu.telecom_bretagne.ambSocialNetwork.data.model;
 
 import java.io.Serializable;
+
 import java.util.List;
 
 
@@ -9,8 +10,7 @@ import java.util.List;
  * 
  */
 public class Utilisateur implements Serializable {
-
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
 	private Integer id;
 
@@ -194,4 +194,5 @@ public class Utilisateur implements Serializable {
   {
     return "Utilisateur [id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", email=" + email + ", motDePasse=" + motDePasse + "]";
   }
+
 }
