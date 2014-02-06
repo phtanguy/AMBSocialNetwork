@@ -11,7 +11,7 @@ import android.util.Log;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
 
-import eu.telecom_bretagne.ambSocialNetwork.data.model.Utilisateur;
+import eu.telecom_bretagne.ambSocialNetwork.data.model.UtilisateurDTO;
 import eu.telecom_bretagne.ambSocialNetwork.data.model.UtilisateursList;
 
 public class UtilisateurController extends Controller
@@ -47,7 +47,7 @@ public class UtilisateurController extends Controller
     return ul;
   }
   //-----------------------------------------------------------------------------
-  public Utilisateur authentification(String email, String password) throws ClientProtocolException, IOException
+  public UtilisateurDTO authentification(String email, String password) throws ClientProtocolException, IOException
   {
     Map<String,String> formValues = new HashMap<String, String>();
     formValues.put("email",        email);
@@ -56,13 +56,13 @@ public class UtilisateurController extends Controller
     String jsonUtilisateurData = downloadContent(URL_UTILISATEUR + "/authentification", formValues);
 
     // Décodage de la réponse.
-    Utilisateur utilisateur = null;
+    UtilisateurDTO utilisateur = null;
     if(jsonUtilisateurData != null)
     {
       JsonParser   jParser  = jFactory.createParser(jsonUtilisateurData);
       try
       {
-        utilisateur = oMapper.readValue(jParser, Utilisateur.class);
+        utilisateur = oMapper.readValue(jParser, UtilisateurDTO.class);
         Log.d("AMBSocialNetwork", "-----------------------------> authentification(" + email + ", " + password + ") = " + utilisateur);
       }
       catch(JsonParseException jpe)

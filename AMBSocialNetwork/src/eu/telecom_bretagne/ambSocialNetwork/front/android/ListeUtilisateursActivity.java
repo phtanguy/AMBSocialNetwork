@@ -12,7 +12,7 @@ import android.widget.ListAdapter;
 import android.widget.SimpleAdapter;
 import android.widget.ListView;
 import eu.telecom_bretagne.ambSocialNetwork.R;
-import eu.telecom_bretagne.ambSocialNetwork.data.model.Utilisateur;
+import eu.telecom_bretagne.ambSocialNetwork.data.model.UtilisateurDTO;;
 
 public class ListeUtilisateursActivity extends ListActivity
 {
@@ -28,14 +28,14 @@ public class ListeUtilisateursActivity extends ListActivity
     setContentView(R.layout.activity_liste_utilisateurs);
     
     @SuppressWarnings("unchecked")
-    ArrayList<Utilisateur> utilisateurs = (ArrayList<Utilisateur>) this.getIntent().getExtras().get("listeDesUtilisateurs");
+    ArrayList<UtilisateurDTO> utilisateurs = (ArrayList<UtilisateurDTO>) this.getIntent().getExtras().get("listeDesUtilisateurs");
     
     /**
      * Updating parsed JSON data into ListView
      * */
     ListView lv = getListView();
     ArrayList<HashMap<String, String>> listeAffichageUtilisateurs = new ArrayList<HashMap<String,String>>();
-    for(Utilisateur utilisateur : utilisateurs)
+    for(UtilisateurDTO utilisateur : utilisateurs)
     {
       HashMap<String,String> utilisateurAffichage = new HashMap<String, String>();
       utilisateurAffichage.put(TAG_ID,          utilisateur.getId() + "");
