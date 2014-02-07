@@ -4,13 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.app.ListActivity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
-import android.widget.SimpleAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import eu.telecom_bretagne.ambSocialNetwork.R;
 import eu.telecom_bretagne.ambSocialNetwork.data.model.dto.UtilisateurDTO;
 
