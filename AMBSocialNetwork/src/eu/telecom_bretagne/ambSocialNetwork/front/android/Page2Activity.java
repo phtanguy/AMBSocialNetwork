@@ -14,7 +14,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import eu.telecom_bretagne.ambSocialNetwork.R;
 import eu.telecom_bretagne.ambSocialNetwork.data.controller.UtilisateurController;
-import eu.telecom_bretagne.ambSocialNetwork.data.model.UtilisateursList;
+import eu.telecom_bretagne.ambSocialNetwork.data.model.dto.UtilisateursDTOList;
 
 public class Page2Activity extends Activity
 {
@@ -71,7 +71,7 @@ public class Page2Activity extends Activity
 
   //-----------------------------------------------------------------------------
   // extends AsyncTask<Params, Progress, Result>
-  protected class ChargementUtilisateursAsyncTask extends AsyncTask<String, Integer, UtilisateursList>
+  protected class ChargementUtilisateursAsyncTask extends AsyncTask<String, Integer, UtilisateursDTOList>
   {
     @Override
     protected void onPreExecute()
@@ -85,7 +85,7 @@ public class Page2Activity extends Activity
     }
     @Override
     // doInBackground(Params... params)
-    protected UtilisateursList doInBackground(String... params)
+    protected UtilisateursDTOList doInBackground(String... params)
     {
       UtilisateurController utilisateurController = UtilisateurController.getInstance();
       try
@@ -101,7 +101,7 @@ public class Page2Activity extends Activity
     }
     @Override
     // onPostExecute(Result response)
-    protected void onPostExecute(UtilisateursList response)
+    protected void onPostExecute(UtilisateursDTOList response)
     {
       //Intent afficheListeUtilisateurs = new Intent(Page2Activity.this, ListeUtilisateursActivity.class);
       Intent afficheListeUtilisateurs = new Intent(Page2Activity.this, ListeUtilisateursActivity.class);

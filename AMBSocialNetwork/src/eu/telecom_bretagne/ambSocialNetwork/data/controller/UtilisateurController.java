@@ -11,8 +11,8 @@ import android.util.Log;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
 
-import eu.telecom_bretagne.ambSocialNetwork.data.model.UtilisateurDTO;
-import eu.telecom_bretagne.ambSocialNetwork.data.model.UtilisateursList;
+import eu.telecom_bretagne.ambSocialNetwork.data.model.dto.UtilisateurDTO;
+import eu.telecom_bretagne.ambSocialNetwork.data.model.dto.UtilisateursDTOList;
 
 public class UtilisateurController extends Controller
 {
@@ -39,11 +39,11 @@ public class UtilisateurController extends Controller
     return result;
   }
   //-----------------------------------------------------------------------------
-  public UtilisateursList findAllJson() throws IOException
+  public UtilisateursDTOList findAllJson() throws IOException
   {
     String jsonData = downloadContent(URL_UTILISATEUR);
     JsonParser   jParser  = jFactory.createParser(jsonData);
-    UtilisateursList ul = oMapper.readValue(jParser, UtilisateursList.class);
+    UtilisateursDTOList ul = oMapper.readValue(jParser, UtilisateursDTOList.class);
     return ul;
   }
   //-----------------------------------------------------------------------------

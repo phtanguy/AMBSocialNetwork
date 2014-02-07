@@ -12,7 +12,7 @@ import android.widget.ListAdapter;
 import android.widget.SimpleAdapter;
 import android.widget.ListView;
 import eu.telecom_bretagne.ambSocialNetwork.R;
-import eu.telecom_bretagne.ambSocialNetwork.data.model.UtilisateurDTO;;
+import eu.telecom_bretagne.ambSocialNetwork.data.model.dto.UtilisateurDTO;
 
 public class ListeUtilisateursActivity extends ListActivity
 {
