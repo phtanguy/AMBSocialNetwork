@@ -98,7 +98,7 @@ public class ServiceUtilisateur implements IServiceUtilisateur
   }
   //-----------------------------------------------------------------------------
   @Override
-  public List<Utilisateur> listeDeUtilisateursDontJeSuisAmi(int id)
+  public List<Utilisateur> listeDesUtilisateursDontJeSuisAmi(int id)
   {
     Utilisateur utilisateur = utilisateurDAO.findById(id);
     return utilisateur.getUtilisateurs1();

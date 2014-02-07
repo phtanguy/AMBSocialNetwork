@@ -1,6 +1,5 @@
 package eu.telecom_bretagne.ambSocialNetwork.data.model;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,6 +74,36 @@ public class DTOUtils
     ciDTO.setCommentaires(commentairesId);
     
     return ciDTO;
+  }
+  //-----------------------------------------------------------------------------
+  public static List<UtilisateurDTO> toListeUtilisateurDTO(List<Utilisateur> utilisateurs)
+  {
+    List<UtilisateurDTO> resultat = new ArrayList<UtilisateurDTO>();
+    for(Utilisateur u : utilisateurs)
+    {
+      resultat.add(DTOUtils.toDTO(u));
+    }
+    return resultat;
+  }
+  //-----------------------------------------------------------------------------
+  public static List<CentreInteretDTO> toListeCentreInteretDTO(List<CentreInteret> centresInteret)
+  {
+    List<CentreInteretDTO> resultat = new ArrayList<CentreInteretDTO>();
+    for(CentreInteret ci : centresInteret)
+    {
+      resultat.add(DTOUtils.toDTO(ci));
+    }
+    return resultat;
+  }
+  //-----------------------------------------------------------------------------
+  public static List<CommentaireDTO> toListeCommentaireDTO(List<Commentaire> commentaires)
+  {
+    List<CommentaireDTO> resultat = new ArrayList<CommentaireDTO>();
+    for(Commentaire c : commentaires)
+    {
+      resultat.add(DTOUtils.toDTO(c));
+    }
+    return resultat;
   }
   //-----------------------------------------------------------------------------
 }

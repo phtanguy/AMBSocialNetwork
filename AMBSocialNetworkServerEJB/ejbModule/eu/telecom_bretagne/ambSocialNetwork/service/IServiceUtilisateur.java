@@ -3,7 +3,6 @@ package eu.telecom_bretagne.ambSocialNetwork.service;
 import java.util.List;
 
 import javax.ejb.Remote;
-import javax.ws.rs.FormParam;
 
 import eu.telecom_bretagne.ambSocialNetwork.data.model.Utilisateur;
 
@@ -25,7 +24,7 @@ public interface IServiceUtilisateur
   public void              effaceUtilisateur(int id);
   public List<Utilisateur> listeDesUtilisateurs();
   public List<Utilisateur> listeDeMesAmis(int id);
-  public List<Utilisateur> listeDeUtilisateursDontJeSuisAmi(int id);
+  public List<Utilisateur> listeDesUtilisateursDontJeSuisAmi(int id);
   public Utilisateur       miseAJour(int id,
                                      String nom, String prenom,
                                      String email, String motDePasse,

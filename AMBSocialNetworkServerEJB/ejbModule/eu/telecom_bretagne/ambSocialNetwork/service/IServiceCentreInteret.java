@@ -12,11 +12,15 @@ public interface IServiceCentreInteret
 {
   //-----------------------------------------------------------------------------
   public CentreInteret       getCentreInteret(int id);
+  public Commentaire         getCommentaire(int id);
   public CentreInteret       getCentreInteret(String latitude, String longitude);
   public List<CentreInteret> listeDesCentresInteret();
   public Commentaire         nouveauCommentaire(int idUtilisateur,
                                                 int idCentreInteret,
                                                 String contenu,
                                                 boolean partagePublic);
+  public List<Commentaire>   listeDesCommentaires();
+  public List<Commentaire>   listeDesCommentairesPourUnCentreInteret(int idCentreInteret);
+  public List<Commentaire>   listeDesCommentairesPourUnUtilisateur(int idUtilisateur);
   //-----------------------------------------------------------------------------
 }

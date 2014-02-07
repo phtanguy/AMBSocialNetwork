@@ -1,7 +1,6 @@
 package eu.telecom_bretagne.ambSocialNetwork.service;
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -42,6 +41,12 @@ public class ServiceCentreInteret implements IServiceCentreInteret
   }
   //-----------------------------------------------------------------------------
   @Override
+  public Commentaire getCommentaire(int id)
+  {
+    return commentaireDAO.findById(id);
+  }
+  //-----------------------------------------------------------------------------
+  @Override
   public CentreInteret getCentreInteret(String latitude, String longitude)
   {
     return centreInteretDAO.findByPosition(latitude, longitude);
@@ -78,4 +83,24 @@ public class ServiceCentreInteret implements IServiceCentreInteret
     
     return commentaire;
   }
+  //-----------------------------------------------------------------------------
+  @Override
+  public List<Commentaire> listeDesCommentaires()
+  {
+    return commentaireDAO.findAll();
+  }
+  //-----------------------------------------------------------------------------
+  @Override
+  public List<Commentaire> listeDesCommentairesPourUnCentreInteret(int idCentreInteret)
+  {
+    return commentaireDAO.findAllByCentreInteret(idCentreInteret);
+  }
+  //-----------------------------------------------------------------------------
+  @Override
+  public List<Commentaire> listeDesCommentairesPourUnUtilisateur(
+      int idUtilisateur)
+  {
+    return commentaireDAO.findAllByUtilisateur(idUtilisateur);
+  }
+  //-----------------------------------------------------------------------------
 }
