@@ -1,7 +1,11 @@
-package eu.telecom_bretagne.ambSocialNetwork.data.model;
+package eu.telecom_bretagne.ambSocialNetwork.data.model.dto;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import eu.telecom_bretagne.ambSocialNetwork.data.model.Utilisateur;
+import eu.telecom_bretagne.ambSocialNetwork.data.model.Commentaire;
+import eu.telecom_bretagne.ambSocialNetwork.data.model.CentreInteret;
 
 public class DTOUtils
 {
@@ -33,13 +37,13 @@ public class DTOUtils
     {
       utilisateursId.add(u.getId());
     }
-    uDTO.setUtilisateurs1(utilisateursId);
+    uDTO.setDeclaresEtreMesAmis(utilisateursId);
     utilisateursId = new ArrayList<Integer>();
     for(Utilisateur u : utilisateur.getUtilisateurs2())
     {
       utilisateursId.add(u.getId());
     }
-    uDTO.setUtilisateurs2(utilisateursId);
+    uDTO.setMesAmis(utilisateursId);
     
     return uDTO;
   }
