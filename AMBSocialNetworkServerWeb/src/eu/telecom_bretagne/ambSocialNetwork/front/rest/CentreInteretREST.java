@@ -1,6 +1,5 @@
 package eu.telecom_bretagne.ambSocialNetwork.front.rest;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -17,7 +16,6 @@ import eu.telecom_bretagne.ambSocialNetwork.data.model.CentreInteretDTO;
 import eu.telecom_bretagne.ambSocialNetwork.data.model.Commentaire;
 import eu.telecom_bretagne.ambSocialNetwork.data.model.CommentaireDTO;
 import eu.telecom_bretagne.ambSocialNetwork.data.model.DTOUtils;
-import eu.telecom_bretagne.ambSocialNetwork.data.model.Utilisateur;
 import eu.telecom_bretagne.ambSocialNetwork.front.utils.ServicesLocator;
 import eu.telecom_bretagne.ambSocialNetwork.front.utils.ServicesLocatorException;
 import eu.telecom_bretagne.ambSocialNetwork.service.IServiceCentreInteret;
@@ -60,8 +58,8 @@ public class CentreInteretREST
   //-----------------------------------------------------------------------------
   @GET
   @Produces(MediaType.TEXT_PLAIN)
-  @Path("/text")
-  public String getCentresInteret_TEXT()
+  @Path("/ci_text")
+  public String getCentresInteretText()
   {
     String separateur = "---------------------------------------------------------\n";
     String s = separateur;
@@ -76,25 +74,52 @@ public class CentreInteretREST
   }
   //-----------------------------------------------------------------------------
   @GET
-  @Produces(MediaType.APPLICATION_JSON)
-  public List<CentreInteretDTO> getUtilisateurs_JSON()
+  @Produces(MediaType.TEXT_PLAIN)
+  @Path("/comm_text")
+  public String getCommentairesText()
   {
-    List<CentreInteret>    centresInteret = serviceCentreInteret.listeDesCentresInteret();
-    List<CentreInteretDTO> centresInteretResultat = new ArrayList<CentreInteretDTO>();
-    for(CentreInteret ci : centresInteret)
+    String separateur = "---------------------------------------------------------\n";
+    String s = separateur;
+    
+    for(Commentaire c : serviceCentreInteret.listeDesCommentaires())
     {
-      centresInteretResultat.add(DTOUtils.toDTO(ci));
+      s += DTOUtils.toDTO(c) + "\n";
     }
-    return centresInteretResultat;
+    s += separateur;
+    
+    return s;
   }
   //-----------------------------------------------------------------------------
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  @Path("{id}")
-  public CentreInteretDTO getCentreInteretById_JSON(@PathParam("id") int id)
+  @Path("/ci")
+  public List<CentreInteretDTO> getCentresInteret()
   {
-    CentreInteret centreInteret = serviceCentreInteret.getCentreInteret(id);
-    return DTOUtils.toDTO(centreInteret);
+    return DTOUtils.toListeCentreInteretDTO(serviceCentreInteret.listeDesCentresInteret());
+  }
+  //-----------------------------------------------------------------------------
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("/comm")
+  public List<CommentaireDTO> getCommentaires()
+  {
+    return DTOUtils.toListeCommentaireDTO(serviceCentreInteret.listeDesCommentaires());
+  }
+  //-----------------------------------------------------------------------------
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("/ci/{id}")
+  public CentreInteretDTO getCentreInteretById(@PathParam("id") int id)
+  {
+    return DTOUtils.toDTO(serviceCentreInteret.getCentreInteret(id));
+  }
+  //-----------------------------------------------------------------------------
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("/comm/{id}")
+  public CommentaireDTO getCommentaireById(@PathParam("id") int id)
+  {
+    return DTOUtils.toDTO(serviceCentreInteret.getCommentaire(id));
   }
   //-----------------------------------------------------------------------------
   @POST
@@ -104,24 +129,41 @@ public class CentreInteretREST
   public CentreInteretDTO getCentreInteretByPosition(@FormParam("latitude")  String latitude,
                                                      @FormParam("longitude") String longitude)
   {
-    CentreInteret centreInteret = serviceCentreInteret.getCentreInteret(latitude, longitude);
-    return DTOUtils.toDTO(centreInteret);
+    return DTOUtils.toDTO(serviceCentreInteret.getCentreInteret(latitude, longitude));
   }
   //-----------------------------------------------------------------------------
   @POST
   @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/new_comment")
-  public CommentaireDTO nouveauCommentaire(@FormParam("id_utilisateur")    String idUtilisateur,
-                                           @FormParam("id_centre_interet") String idCentreInteret,
-                                           @FormParam("contenu")           String contenu,
-                                           @FormParam("partage_public")    String partagePublic)
+  public CommentaireDTO nouveauCommentaire(@FormParam("id_utilisateur")    int     idUtilisateur,
+                                           @FormParam("id_centre_interet") int     idCentreInteret,
+                                           @FormParam("contenu")           String  contenu,
+                                           @FormParam("partage_public")    boolean partagePublic)
   {
-    Commentaire commentaire =  serviceCentreInteret.nouveauCommentaire(Integer.parseInt(idUtilisateur),
-                                                                       Integer.parseInt(idCentreInteret),
+    Commentaire commentaire =  serviceCentreInteret.nouveauCommentaire(idUtilisateur,
+                                                                       idCentreInteret,
                                                                        contenu,
-                                                                       Boolean.parseBoolean(partagePublic));
+                                                                       partagePublic);
     return DTOUtils.toDTO(commentaire);
+  }
+  //-----------------------------------------------------------------------------
+  @POST
+  @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("/comm_ci")
+  public List<CommentaireDTO> listeDesCommentairesPourUnCentreInteret(@FormParam("id_centre_interet") int idCentreInteret)
+  {
+    return DTOUtils.toListeCommentaireDTO(serviceCentreInteret.listeDesCommentairesPourUnCentreInteret(idCentreInteret));
+  }
+  //-----------------------------------------------------------------------------
+  @POST
+  @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("/comm_ut")
+  public List<CommentaireDTO> listeDesCommentairesPourUnUtilisateur(@FormParam("id_utilisateur") int idUtilisateur)
+  {
+    return DTOUtils.toListeCommentaireDTO(serviceCentreInteret.listeDesCommentairesPourUnUtilisateur(idUtilisateur));
   }
   //-----------------------------------------------------------------------------
 }

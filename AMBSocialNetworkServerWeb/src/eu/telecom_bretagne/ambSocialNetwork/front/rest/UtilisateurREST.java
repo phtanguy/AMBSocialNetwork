@@ -1,6 +1,5 @@
 package eu.telecom_bretagne.ambSocialNetwork.front.rest;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -58,7 +57,7 @@ public class UtilisateurREST
   @GET
   @Produces(MediaType.TEXT_PLAIN)
   @Path("/text")
-  public String getUtilisateurs_TEXT()
+  public String getUtilisateursText()
   {
     String separateur = "---------------------------------------------------------\n";
     String s = separateur;
@@ -74,25 +73,17 @@ public class UtilisateurREST
   //-----------------------------------------------------------------------------
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  public List<UtilisateurDTO> getUtilisateurs_JSON()
+  public List<UtilisateurDTO> getUtilisateurs()
   {
-    List<Utilisateur> utilisateurs = serviceUtilisateur.listeDesUtilisateurs();
-    System.out.println("-----------------------------> utilisateurs.size() = " + utilisateurs.size());
-    List<UtilisateurDTO> utilisateursResultat = new ArrayList<UtilisateurDTO>();
-    for(Utilisateur u : utilisateurs)
-    {
-      utilisateursResultat.add(DTOUtils.toDTO(u));
-    }
-    return utilisateursResultat;
+    return DTOUtils.toListeUtilisateurDTO(serviceUtilisateur.listeDesUtilisateurs());
   }
   //-----------------------------------------------------------------------------
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   @Path("{id}")
-  public UtilisateurDTO getUtilisateurById_JSON(@PathParam("id") int id)
+  public UtilisateurDTO getUtilisateurById(@PathParam("id") int id)
   {
-    Utilisateur utilisateur = serviceUtilisateur.getUtilisateur(id);
-    return DTOUtils.toDTO(utilisateur);
+    return DTOUtils.toDTO(serviceUtilisateur.getUtilisateur(id));
   }
   //-----------------------------------------------------------------------------
   @POST
@@ -116,9 +107,7 @@ public class UtilisateurREST
   public UtilisateurDTO authentificationForm(@FormParam("email")        String email,
                                              @FormParam("mot_de_passe") String motDePasse)
   {
-    System.out.print("---------------------> Appel de authentificationForm(" + email + ", " + motDePasse + ") = ");
-    Utilisateur utilisateur = serviceUtilisateur.authentification(email, motDePasse);
-    return DTOUtils.toDTO(utilisateur);
+    return DTOUtils.toDTO(serviceUtilisateur.authentification(email, motDePasse));
   }
   //-----------------------------------------------------------------------------
   @POST
@@ -139,20 +128,6 @@ public class UtilisateurREST
                                         //@FormParam("cap")                     String cap,
                                         //@FormParam("vitesse")                 String vitesse)
   {
-    System.out.println("---------------------------------> id                    = " + id);
-    System.out.println("---------------------------------> nom                   = " + nom);
-    System.out.println("---------------------------------> prenom                = " + prenom);
-    System.out.println("---------------------------------> prenom                = " + prenom);
-    System.out.println("---------------------------------> motDePasse            = " + motDePasse);
-    System.out.println("---------------------------------> urlAvatar             = " + urlAvatar);
-    System.out.println("---------------------------------> description           = " + description);
-    System.out.println("---------------------------------> partagePosition       = " + partagePosition);
-    System.out.println("---------------------------------> partagePositionPublic = " + partagePositionPublic);
-    //System.out.println("---------------------------------> latitude              = " + latitude);
-    //System.out.println("---------------------------------> longitude             = " + longitude);
-    //System.out.println("---------------------------------> cap                   = " + cap);
-    //System.out.println("---------------------------------> vitesse               = " + vitesse);
-    
     Utilisateur u = serviceUtilisateur.miseAJour(Integer.parseInt(id),
                                         (nom.equals("")?null:nom),
                                         (prenom.equals("")?null:prenom),
