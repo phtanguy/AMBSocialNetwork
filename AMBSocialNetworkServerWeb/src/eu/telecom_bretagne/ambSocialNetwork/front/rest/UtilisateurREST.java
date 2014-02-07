@@ -11,9 +11,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import eu.telecom_bretagne.ambSocialNetwork.data.model.DTOUtils;
 import eu.telecom_bretagne.ambSocialNetwork.data.model.Utilisateur;
-import eu.telecom_bretagne.ambSocialNetwork.data.model.UtilisateurDTO;
+import eu.telecom_bretagne.ambSocialNetwork.data.model.dto.DTOUtils;
+import eu.telecom_bretagne.ambSocialNetwork.data.model.dto.UtilisateurDTO;
 import eu.telecom_bretagne.ambSocialNetwork.front.utils.ServicesLocator;
 import eu.telecom_bretagne.ambSocialNetwork.front.utils.ServicesLocatorException;
 import eu.telecom_bretagne.ambSocialNetwork.service.IServiceUtilisateur;

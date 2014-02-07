@@ -12,10 +12,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import eu.telecom_bretagne.ambSocialNetwork.data.model.CentreInteret;
-import eu.telecom_bretagne.ambSocialNetwork.data.model.CentreInteretDTO;
 import eu.telecom_bretagne.ambSocialNetwork.data.model.Commentaire;
-import eu.telecom_bretagne.ambSocialNetwork.data.model.CommentaireDTO;
-import eu.telecom_bretagne.ambSocialNetwork.data.model.DTOUtils;
+import eu.telecom_bretagne.ambSocialNetwork.data.model.dto.CentreInteretDTO;
+import eu.telecom_bretagne.ambSocialNetwork.data.model.dto.CommentaireDTO;
+import eu.telecom_bretagne.ambSocialNetwork.data.model.dto.DTOUtils;
 import eu.telecom_bretagne.ambSocialNetwork.front.utils.ServicesLocator;
 import eu.telecom_bretagne.ambSocialNetwork.front.utils.ServicesLocatorException;
 import eu.telecom_bretagne.ambSocialNetwork.service.IServiceCentreInteret;
