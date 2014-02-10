@@ -5,6 +5,7 @@
 	<projects>
 		<project>AMBSocialNetworkServerWeb</project>
 		<project>AMBSocialNetworkServerEJB</project>
+		<project>AMBSocialNetworkServerVaadin</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
