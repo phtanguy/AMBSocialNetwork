@@ -88,24 +88,24 @@ public class UtilisateurREST
   //-----------------------------------------------------------------------------
   @POST
   @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-  @Produces(MediaType.TEXT_PLAIN)
+  @Produces(MediaType.APPLICATION_JSON)
   @Path("/new")
-  public String nouvelUtilisateur(@FormParam("nom")          String nom,
-                                  @FormParam("prenom")       String prenom,
-                                  @FormParam("email")        String email,
-                                  @FormParam("mot_de_passe") String motDePasse,
-                                  @FormParam("description")  String description)
+  public UtilisateurDTO nouvelUtilisateur(@FormParam("nom")          String nom,
+                                          @FormParam("prenom")       String prenom,
+                                          @FormParam("email")        String email,
+                                          @FormParam("mot_de_passe") String motDePasse,
+                                          @FormParam("description")  String description)
   {
     Utilisateur utilisateur = serviceUtilisateur.nouvelUtilisateur(nom, prenom, email, motDePasse, description);
-    return utilisateur.toString();
+    return DTOUtils.toDTO(utilisateur);
   }
   //-----------------------------------------------------------------------------
   @POST
   @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/authentification")
-  public UtilisateurDTO authentificationForm(@FormParam("email")        String email,
-                                             @FormParam("mot_de_passe") String motDePasse)
+  public UtilisateurDTO authentification(@FormParam("email")        String email,
+                                         @FormParam("mot_de_passe") String motDePasse)
   {
     return DTOUtils.toDTO(serviceUtilisateur.authentification(email, motDePasse));
   }
