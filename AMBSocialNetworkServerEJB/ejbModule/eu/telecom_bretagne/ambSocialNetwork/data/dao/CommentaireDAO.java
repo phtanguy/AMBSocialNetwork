@@ -51,7 +51,7 @@ public class CommentaireDAO
   @SuppressWarnings("unchecked")
   public List<Commentaire> findAllByUtilisateur(int idUtilisateur)
   {
-    Query query = entityManager.createQuery("select c from Commentaire c join c.utilisateurBean u where u.id = :idUtilisateur");
+    Query query = entityManager.createQuery("select c from Commentaire c join c.utilisateurBean u where u.id = :idUtilisateur order by c.datePublication desc");
     query.setParameter("idUtilisateur", idUtilisateur);
     @SuppressWarnings("rawtypes")
     List l = query.getResultList();
@@ -62,7 +62,7 @@ public class CommentaireDAO
   @SuppressWarnings("unchecked")
   public List<Commentaire> findAllByCentreInteret(int idCentreInteret)
   {
-    Query query = entityManager.createQuery("select c from Commentaire c join c.centreInteretBean ci where ci.id = :idCentreInteret");
+    Query query = entityManager.createQuery("select c from Commentaire c join c.centreInteretBean ci where ci.id = :idCentreInteret order by c.datePublication desc");
     query.setParameter("idCentreInteret", idCentreInteret);
     @SuppressWarnings("rawtypes")
     List l = query.getResultList();
@@ -73,7 +73,7 @@ public class CommentaireDAO
   @SuppressWarnings("unchecked")
   public List<Commentaire> findAll()
   {
-    Query query = entityManager.createQuery("select ci from Commentaire ci order by ci.id");
+    Query query = entityManager.createQuery("select c from Commentaire c order by c.datePublication desc");
     @SuppressWarnings("rawtypes")
     List l = query.getResultList(); 
     
