@@ -27,21 +27,30 @@ public class DTOUtils
     uDTO.setCap(utilisateur.getCap());
     uDTO.setVitesse(utilisateur.getVitesse());
     List<Integer> commentairesId = new ArrayList<Integer>();
-    for(Commentaire c : utilisateur.getCommentaires())
+    if(utilisateur.getCommentaires() != null)
     {
-      commentairesId.add(c.getId());
+      for(Commentaire c : utilisateur.getCommentaires())
+      {
+        commentairesId.add(c.getId());
+      }
     }
     uDTO.setCommentaires(commentairesId);
     List<Integer> utilisateursId = new ArrayList<Integer>();
-    for(Utilisateur u : utilisateur.getUtilisateurs1())
+    if(utilisateur.getUtilisateurs1() != null)
     {
-      utilisateursId.add(u.getId());
+      for(Utilisateur u : utilisateur.getUtilisateurs1())
+      {
+        utilisateursId.add(u.getId());
+      }
     }
     uDTO.setDeclaresEtreMesAmis(utilisateursId);
     utilisateursId = new ArrayList<Integer>();
-    for(Utilisateur u : utilisateur.getUtilisateurs2())
+    if(utilisateur.getUtilisateurs2() != null)
     {
-      utilisateursId.add(u.getId());
+      for(Utilisateur u : utilisateur.getUtilisateurs2())
+      {
+        utilisateursId.add(u.getId());
+      }
     }
     uDTO.setMesAmis(utilisateursId);
     
@@ -71,9 +80,12 @@ public class DTOUtils
     ciDTO.setLatitude(centreInteret.getLatitude());
     ciDTO.setLongitude(centreInteret.getLongitude());
     List<Integer> commentairesId = new ArrayList<Integer>();
-    for(Commentaire c : centreInteret.getCommentaires())
+    if(centreInteret.getCommentaires() != null)
     {
-      commentairesId.add(c.getId());
+      for(Commentaire c : centreInteret.getCommentaires())
+      {
+        commentairesId.add(c.getId());
+      }
     }
     ciDTO.setCommentaires(commentairesId);
     
