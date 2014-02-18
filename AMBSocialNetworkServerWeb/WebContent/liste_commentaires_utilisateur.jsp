@@ -1,10 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
 <%@page import="eu.telecom_bretagne.ambSocialNetwork.data.model.Utilisateur,
-                eu.telecom_bretagne.ambSocialNetwork.data.model.CentreInteret,
+                eu.telecom_bretagne.ambSocialNetwork.data.model.Point,
                 eu.telecom_bretagne.ambSocialNetwork.data.model.Commentaire,
-                eu.telecom_bretagne.ambSocialNetwork.service.IServiceUtilisateur,
-                eu.telecom_bretagne.ambSocialNetwork.service.IServiceCentreInteret,
+                eu.telecom_bretagne.ambSocialNetwork.service.IServiceUtilisateur,eu.telecom_bretagne.ambSocialNetwork.service.IServicePoint,
                 eu.telecom_bretagne.ambSocialNetwork.front.utils.ServicesLocator,
                 java.util.List"%>
 

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="ISO-8859-1">
+    <title>Obtenir un POI par sa position</title>
+    <link rel="stylesheet" href="styles.css" type="text/css" />
+  </head>
+  
+  <body>
+    <h2>Obtenir un POI par sa position</h2>
+    
+    <form action="RestWebServices/centre_interet/getPoiByPosition" method="post">
+      <table id="affichage">
+        <tr>
+          <th style="width: 170px;">Latitude :</th>
+          <td>
+            <input type="text" name="latitude" size="11" maxlength="11">
+          </td>
+        </tr>
+        <tr>
+          <th style="width: 170px;">Longitude :</th>
+          <td>
+            <input type="text" name="longitude" size="11" maxlength="11">
+          </td>
+        </tr>
+      </table>
+      <p>
+        <input type="submit" value="OK"/>
+      </p>
+    </form>
+  
+  </body>
+  
+</html>

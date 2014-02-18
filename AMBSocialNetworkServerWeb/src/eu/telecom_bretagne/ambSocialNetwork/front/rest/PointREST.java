@@ -196,7 +196,7 @@ public class PointREST
   @POST
   @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
   @Produces(MediaType.APPLICATION_JSON)
-  @Path("/comm_ci")
+  @Path("/comm_point")
   public List<CommentaireDTO> listeDesCommentairesPourUnPoint(@FormParam("id_point") int idPoint)
   {
     return DTOUtils.toListeCommentaireDTO(servicePoint.listeDesCommentairesPourUnPoint(idPoint));
