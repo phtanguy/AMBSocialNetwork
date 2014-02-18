@@ -8,9 +8,11 @@
 
 		<jta-data-source>jdbc/AMB_BD</jta-data-source>
 
-		<class>eu.telecom_bretagne.ambSocialNetwork.data.model.CentreInteret</class>
 		<class>eu.telecom_bretagne.ambSocialNetwork.data.model.Commentaire</class>
 		<class>eu.telecom_bretagne.ambSocialNetwork.data.model.Utilisateur</class>
+		<class>eu.telecom_bretagne.ambSocialNetwork.data.model.Poi</class>
+		<class>eu.telecom_bretagne.ambSocialNetwork.data.model.Point</class>
+		<class>eu.telecom_bretagne.ambSocialNetwork.data.model.Service</class>
 
 	</persistence-unit>
 

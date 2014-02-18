@@ -8,14 +8,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import eu.telecom_bretagne.ambSocialNetwork.data.model.CentreInteret;
+import eu.telecom_bretagne.ambSocialNetwork.data.model.Service;
 
 /**
  * Session Bean implementation class CentreInteretDAO
  */
 @Stateless
 @LocalBean
-public class CentreInteretDAO
+public class ServiceDAO
 {
   //-----------------------------------------------------------------------------
   /**
@@ -27,64 +27,64 @@ public class CentreInteretDAO
   /**
    * Default constructor.
    */
-  public CentreInteretDAO()
+  public ServiceDAO()
   {
     // TODO Auto-generated constructor stub
   }
   //-----------------------------------------------------------------------------
   /**
    * Rend persistante l'instance (benan entity) de l'utilisateur.
-   * @param utilisateur bean entity représentant l'instance.
+   * @param service bean entity représentant l'instance.
    * @return l'instance de l'utilisateur une fois persistée dans la base de données.
    */
-  public CentreInteret persist(CentreInteret centreInteret)
+  public Service persist(Service service)
   {
-    entityManager.persist(centreInteret);
-    return centreInteret;
+    entityManager.persist(service);
+    return service;
   }
   //----------------------------------------------------------------------------
-  public CentreInteret findById(Integer id)
+  public Service findById(Integer id)
   {
-    return entityManager.find(CentreInteret.class, id);
+    return entityManager.find(Service.class, id);
   }
   //----------------------------------------------------------------------------
-  public CentreInteret findByPosition(String latitude, String longitude)
+  public Service findByPosition(String latitude, String longitude)
   {
-    Query query = entityManager.createQuery("select ci from CentreInteret ci where ci.latitude = :latitude and ci.longitude = :longitude");
+    Query query = entityManager.createQuery("select s from Service s join s.point p where p.latitude = :latitude and p.longitude = :longitude");
     query.setParameter("latitude",  latitude);
     query.setParameter("longitude", longitude);
     @SuppressWarnings("rawtypes")
     List l = query.getResultList();
     if(l.size() == 0)
       return null;
-    return (CentreInteret) l.get(0);
+    return (Service) l.get(0);
   }
   //----------------------------------------------------------------------------
   @SuppressWarnings("unchecked")
-  public List<CentreInteret> findAll()
+  public List<Service> findAll()
   {
-    Query query = entityManager.createQuery("select ci from CentreInteret ci order by ci.id");
+    Query query = entityManager.createQuery("select s from service s order by s.id");
     @SuppressWarnings("rawtypes")
     List l = query.getResultList(); 
     
-    return (List<CentreInteret>)l;
+    return (List<Service>)l;
   }
   //-----------------------------------------------------------------------------
-  public CentreInteret update(CentreInteret centreInteret)
+  public Service update(Service service)
   {
-    entityManager.merge(centreInteret);
-    return findById(centreInteret.getId());
+    entityManager.merge(service);
+    return findById(service.getId());
   }
   //-----------------------------------------------------------------------------
-  public void remove(CentreInteret centreInteret)
+  public void remove(Service service)
   {
-    if(!entityManager.contains(centreInteret))            // Si l'entité n'est pas dans un état "géré" (managed),
-    {                                                     // il est impossible de la supprimer directement, erreur "Entity must be managed to call remove"
-      centreInteret = entityManager.merge(centreInteret); // Il faut la "rattacher" au contexte de persistance par l'appel    
-    }                                                     // de la méthode merge de l'ENtityManager.
+    if(!entityManager.contains(service))      // Si l'entité n'est pas dans un état "géré" (managed),
+    {                                         // il est impossible de la supprimer directement, erreur "Entity must be managed to call remove"
+      service = entityManager.merge(service); // Il faut la "rattacher" au contexte de persistance par l'appel    
+    }                                         // de la méthode merge de l'ENtityManager.
     
     // L'entité était déjà attachée ou a été rattachée, on peut donc la supprimer...
-    entityManager.remove(centreInteret);
+    entityManager.remove(service);
   }
   //-----------------------------------------------------------------------------
 }
