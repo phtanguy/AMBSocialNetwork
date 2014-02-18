@@ -1,7 +1,32 @@
+-- Titre :             Insertion de données de test pour la base AMBSocialNetwork
+-- Version :           0.1
+-- Date création :     16 janvier 2014
+-- Date modification : 18 février 2014
+-- Auteur :            Philippe Tanguy
+-- Description :       À compléter...
+
+-- +----------------------------------------------------------------------------------------------+
+-- | Effacement des anciennes valeurs si elle existent                                            |
+-- +----------------------------------------------------------------------------------------------+
+
 delete from est_ami;
 delete from commentaire;
 delete from utilisateur;
-delete from centre_interet;
+delete from service;
+delete from poi;
+delete from point;
+
+-- +----------------------------------------------------------------------------------------------+
+-- | Réinitialisation des séquences                                                               |
+-- +----------------------------------------------------------------------------------------------+
+
+select setval('commentaire_id_seq', 1, false);  
+select setval('point_id_seq',       1, false);
+select setval('utilisateur_id_seq', 1, false);
+
+-- +----------------------------------------------------------------------------------------------+
+-- | Insertion de données de test                                                                 |
+-- +----------------------------------------------------------------------------------------------+
 
 insert into utilisateur(nom,prenom,email,mot_de_passe,description,partage_position,partage_position_public) values ('TANGUY',    'Philippe',    'philippe.tanguy@telecom-bretagne.eu',  'amb', 'Beau et riche...',             false, false); -- 01
 insert into utilisateur(nom,prenom,email,mot_de_passe,description,partage_position,partage_position_public) values ('SIMONNET',  'Mathieu',     'mathieu.simonnet@telecom-bretagne.eu', 'amb', 'Assez beau et assez riche...', false, false); -- 02
@@ -16,19 +41,36 @@ insert into est_ami values (6, 5); -- DUSCHMOLL -> DURAND
 insert into est_ami values (6, 7); -- DUSCHMOLL -> TAGADA
 insert into est_ami values (1, 7); -- TANGUY    -> TAGADA
 
-insert into centre_interet(nom,description,latitude,longitude) values ('carburant',      'Carburant',                          '48.377833', '-4.489533');
-insert into centre_interet(nom,description,latitude,longitude) values ('ordure',         'Récupération des ordures ménagères', '48.378883', '-4.486483');
-insert into centre_interet(nom,description,latitude,longitude) values ('ordure',         'Récupération des ordures ménagères', '48.380883', '-4.490665');
-insert into centre_interet(nom,description,latitude,longitude) values ('wc',             'Toilettes',                          '48.378583', '-4.4869');
-insert into centre_interet(nom,description,latitude,longitude) values ('wc',             'Toilettes',                          '48.38065',  '-4.4899');
-insert into centre_interet(nom,description,latitude,longitude) values ('douche',         'Douches',                            '48.3809',   '-4.4897');
-insert into centre_interet(nom,description,latitude,longitude) values ('douche',         'Douches',                            '48.378233', '-4.486466');
-insert into centre_interet(nom,description,latitude,longitude) values ('supermarche',    'Supermarché',                        '48.380216', '-4.491166');
-insert into centre_interet(nom,description,latitude,longitude) values ('supermarche',    'Supermarché',                        '48.380366', '-4.490766');
-insert into centre_interet(nom,description,latitude,longitude) values ('manutention',    'Zone de manutention',                '48.3797',   '-4.4913');
-insert into centre_interet(nom,description,latitude,longitude) values ('capitainerie',   'Capitainerie',                       '48.380816', '-4.49');
-insert into centre_interet(nom,description,latitude,longitude) values ('capitainerie',   'Douane',                             '48.3824',   '-4.486216');
-insert into centre_interet(nom,description,latitude,longitude) values ('parking',        'Parking',                            '48.38046',  '-4.4911');
-insert into centre_interet(nom,description,latitude,longitude) values ('visiteur',       null,                                 '48.37815',  '-4.4879');
-insert into centre_interet(nom,description,latitude,longitude) values ('visiteur',       null,                                 '48.377266', '-4.48905');
-insert into centre_interet(nom,description,latitude,longitude) values ('administration', 'administration',                     '48.3823',   '-4.48655');
+insert into point(latitude,longitude) values ('48.377833', '-4.489533');  --  1
+insert into point(latitude,longitude) values ('48.378883', '-4.486483');  --  2
+insert into point(latitude,longitude) values ('48.380883', '-4.490665');  --  3
+insert into point(latitude,longitude) values ('48.378583', '-4.4869');    --  4
+insert into point(latitude,longitude) values ('48.38065',  '-4.4899');    --  5
+insert into point(latitude,longitude) values ('48.3809',   '-4.4897');    --  6
+insert into point(latitude,longitude) values ('48.378233', '-4.486466');  --  7
+insert into point(latitude,longitude) values ('48.380216', '-4.491166');  --  8
+insert into point(latitude,longitude) values ('48.380366', '-4.490766');  --  9
+insert into point(latitude,longitude) values ('48.3797',   '-4.4913');    -- 10
+insert into point(latitude,longitude) values ('48.380816', '-4.49');      -- 11
+insert into point(latitude,longitude) values ('48.3824',   '-4.486216');  -- 12
+insert into point(latitude,longitude) values ('48.38046',  '-4.4911');    -- 13
+insert into point(latitude,longitude) values ('48.37815',  '-4.4879');    -- 14
+insert into point(latitude,longitude) values ('48.377266', '-4.48905');   -- 15
+insert into point(latitude,longitude) values ('48.3823',   '-4.48655');   -- 16
+
+insert into service(id,type,description) values (1,  'carburant',      'Carburant');
+insert into service(id,type,description) values (2,  'ordure',         'Récupération des ordures ménagères');
+insert into service(id,type,description) values (3,  'ordure',         'Récupération des ordures ménagères');
+insert into service(id,type,description) values (4,  'wc',             'Toilettes');
+insert into service(id,type,description) values (5,  'wc',             'Toilettes');
+insert into service(id,type,description) values (6,  'douche',         'Douches');
+insert into service(id,type,description) values (7,  'douche',         'Douches');
+insert into service(id,type,description) values (8,  'supermarche',    'Supermarché');
+insert into service(id,type,description) values (9,  'supermarche',    'Supermarché');
+insert into service(id,type,description) values (10, 'manutention',    'Zone de manutention');
+insert into service(id,type,description) values (11, 'capitainerie',   'Capitainerie');
+insert into service(id,type,description) values (12, 'capitainerie',   'Douane');
+insert into service(id,type,description) values (13, 'parking',        'Parking');
+insert into service(id,type,description) values (14, 'visiteur',       null);
+insert into service(id,type,description) values (15, 'visiteur',       null);
+insert into service(id,type,description) values (16, 'administration', 'administration');

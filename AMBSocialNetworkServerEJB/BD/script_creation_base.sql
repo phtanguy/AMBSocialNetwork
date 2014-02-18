@@ -1,22 +1,38 @@
 -- Titre :             Création base AMBSocialNetwork
 -- Version :           0.1
 -- Date création :     16 janvier 2014
--- Date modification : 16 janvier 2014
+-- Date modification : 18 février 2014
 -- Auteur :            Philippe Tanguy
 -- Description :       À compléter...
 
 -- +----------------------------------------------------------------------------------------------+
--- | Suppression des tables                                                                       |
+-- | Suppression des tables et des types                                                          |
 -- +----------------------------------------------------------------------------------------------+
 
 drop table commentaire;
-drop table centre_interet;
+drop table poi;
+drop table service;
+drop table point;
 drop table est_ami;
 drop table utilisateur;
+
+drop type type_service;
+drop type type_poi;
 
 -- +----------------------------------------------------------------------------------------------+
 -- | Création des tables                                                                          |
 -- +----------------------------------------------------------------------------------------------+
+
+-- ------------------------------------------------------------------------------------------------
+
+-- Commentaires table "utilisateur" :
+--   * Identification de l'utilisateur par l'email (pas de nom de login).
+--   * Limitations du partage de position de l'utilisateur :
+--     Attribut "partage_position" : true (position partagée), false (non).
+--     Attribut "partage_position_public" pris en compte uniquement si le partage
+--     de position est à true : true (partage à tous les utilisateurs), false
+--     (accessible uniquement à la liste d'amis et aux groupes).
+--   * Pour la démo, mots de passe stockés en clair.
 
 create table utilisateur
 (
@@ -35,14 +51,12 @@ create table utilisateur
   vitesse                   integer default -1
 );
 
--- Commentaires table "utilisateur" :
---   * Identification de l'utilisateur par l'email (pas de nom de login).
---   * Limitations du partage de position de l'utilisateur :
---     Attribut "partage_position" : true (position partagée), false (non).
---     Attribut "partage_position_public" pris en compte uniquement si le partage
---     de position est à true : true (partage à tous les utilisateurs), false
---     (accessible uniquement à la liste d'amis et aux groupes).
---   * Pour la démo, mots de passe stockés en clair.
+-- ------------------------------------------------------------------------------------------------
+
+-- Commentaires table "est_ami" :
+--   * L'amitié est à sens unique : u1 déclare qu'il "est ami" avec u2.
+--   * Pour une amitié à double sens, u2 doit déclarer qu'il est aussi ami avec u1.
+--   * Dans un objectif de simplification, pas d'acquitement.
 
 create table est_ami
 (
@@ -51,24 +65,38 @@ create table est_ami
   primary key (utilisateur_source, utilisateur_cible)
 );
 
--- Commentaires table "est_ami" :
---   * L'amitié est à sens unique : u1 déclare qu'il "est ami" avec u2.
---   * Pour une amitié à double sens, u2 doit déclarer qu'il est aussi ami avec u1.
---   * Dans un objectif de simplification, pas d'acquitement.
+-- ------------------------------------------------------------------------------------------------
 
-create table centre_interet
+create type type_service as enum ('administration', 'capitainerie', 'carburant', 'douche', 'manutention', 'ordure', 'parking', 'supermarche', 'visiteur', 'wc');
+create type type_poi     as enum ('remarque', 'peche', 'securite');
+
+-- ------------------------------------------------------------------------------------------------
+
+create table point
 (
-  id          serial primary key,
-  nom         varchar(30),
-  description text,
-  latitude    varchar(10),
-  longitude   varchar(11)
+  id        serial      primary key,
+  latitude  varchar(10) not null,
+  longitude varchar(11) not null
 );
 
--- Commentaires table "centre_interet" :
---   * On ne pourra faire de commentaires que sur des centres d'intérêt préalablement
---     référencés.
---   * Possibilité de référencer un centre d'intérêt via l'IHM Web.
+-- ------------------------------------------------------------------------------------------------
+
+create table service
+(
+  id          integer primary key references point,
+  type        type_service not null,
+  description text
+);
+
+-- ------------------------------------------------------------------------------------------------
+
+create table poi
+(
+  id   integer primary key references point,
+  type type_poi not null
+);
+
+-- ------------------------------------------------------------------------------------------------
 
 -- V1 de la table
 -- create table commentaire
@@ -83,18 +111,6 @@ create table centre_interet
 --   primary key (utilisateur, centre_interet)
 -- );
 
-create table commentaire
-(
-  id                         serial primary key,
-  utilisateur                integer not null references utilisateur,
-  centre_interet             integer not null references centre_interet,
-  contenu                    text,
-  url_photo                  varchar(255),
-  date_publication           timestamp,
-  -- partage_commentaire        boolean default false,
-  partage_commentaire_public boolean default true
-);
-
 -- Commentaires table "commentaire" :
 --   * Limitations du partage du commentaire :
 --     Attribut "partage_commentaire" : true (commentaire partagé), false (non).
@@ -102,3 +118,17 @@ create table commentaire
 --     Attribut "partage_commentaire_public" pris en compte uniquement si le partage
 --     de commentaire est à true : true (partage à tous les utilisateurs), false
 --     (accessible uniquement à la liste d'amis et aux groupes).
+
+create table commentaire
+(
+  id                         serial primary key,
+  utilisateur                integer not null references utilisateur,
+  point                      integer not null references point,
+  contenu                    text,
+  url_photo                  varchar(255),
+  date_publication           timestamp,
+  -- partage_commentaire        boolean default false,
+  partage_commentaire_public boolean default true
+);
+
+-- ------------------------------------------------------------------------------------------------
