@@ -50,8 +50,8 @@ public class ServicesLocator
 		String nomJNDI = null;
 		if(nomEJB.equals("ServiceUtilisateur"))
 			nomJNDI = "java:global/AMBSocialNetworkServer/AMBSocialNetworkServerEJB/ServiceUtilisateur!eu.telecom_bretagne.ambSocialNetwork.service.IServiceUtilisateur";
-		else if(nomEJB.equals("ServiceCentreInteret"))
-			nomJNDI = "java:global/AMBSocialNetworkServer/AMBSocialNetworkServerEJB/ServiceCentreInteret!eu.telecom_bretagne.ambSocialNetwork.service.IServiceCentreInteret";
+		else if(nomEJB.equals("ServicePoint"))
+			nomJNDI = "java:global/AMBSocialNetworkServer/AMBSocialNetworkServerEJB/ServicePoint!eu.telecom_bretagne.ambSocialNetwork.service.IServicePoint";
 		
 		// Pour les contrôles de DAO par les élèves
 		// ========================================

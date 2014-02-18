@@ -11,25 +11,27 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import eu.telecom_bretagne.ambSocialNetwork.data.model.CentreInteret;
 import eu.telecom_bretagne.ambSocialNetwork.data.model.Commentaire;
-import eu.telecom_bretagne.ambSocialNetwork.data.model.dto.CentreInteretDTO;
+import eu.telecom_bretagne.ambSocialNetwork.data.model.Poi;
+import eu.telecom_bretagne.ambSocialNetwork.data.model.Service;
 import eu.telecom_bretagne.ambSocialNetwork.data.model.dto.CommentaireDTO;
 import eu.telecom_bretagne.ambSocialNetwork.data.model.dto.DTOUtils;
+import eu.telecom_bretagne.ambSocialNetwork.data.model.dto.PoiDTO;
+import eu.telecom_bretagne.ambSocialNetwork.data.model.dto.ServiceDTO;
 import eu.telecom_bretagne.ambSocialNetwork.front.utils.ServicesLocator;
 import eu.telecom_bretagne.ambSocialNetwork.front.utils.ServicesLocatorException;
-import eu.telecom_bretagne.ambSocialNetwork.service.IServiceCentreInteret;
+import eu.telecom_bretagne.ambSocialNetwork.service.IServicePoint;
 
 @Path("/centre_interet")
-public class CentreInteretREST
+public class PointREST
 {
   //-----------------------------------------------------------------------------
-  private static IServiceCentreInteret serviceCentreInteret;
+  private static IServicePoint servicePoint;
   static
   {
     try
     {
-      serviceCentreInteret = (IServiceCentreInteret) ServicesLocator.getInstance().getRemoteInterface("ServiceCentreInteret");
+      servicePoint = (IServicePoint) ServicesLocator.getInstance().getRemoteInterface("ServicePoint");
       System.out.println("####### Classe CentreInteretREST : composants EJB récupérés !");
       
     }
@@ -58,15 +60,20 @@ public class CentreInteretREST
   //-----------------------------------------------------------------------------
   @GET
   @Produces(MediaType.TEXT_PLAIN)
-  @Path("/ci_text")
-  public String getCentresInteretText()
+  @Path("/points_text")
+  public String getPoints()
   {
     String separateur = "---------------------------------------------------------\n";
     String s = separateur;
     
-    for(CentreInteret ci : serviceCentreInteret.listeDesCentresInteret())
+    for(Poi poi : servicePoint.listeDesPois())
     {
-      s += DTOUtils.toDTO(ci) + "\n";
+      s += DTOUtils.toDTO(poi) + "\n";
+    }
+    s += separateur;
+    for(Service service : servicePoint.listeDesServices())
+    {
+      s += DTOUtils.toDTO(service) + "\n";
     }
     s += separateur;
     
@@ -81,7 +88,7 @@ public class CentreInteretREST
     String separateur = "---------------------------------------------------------\n";
     String s = separateur;
     
-    for(Commentaire c : serviceCentreInteret.listeDesCommentaires())
+    for(Commentaire c : servicePoint.listeDesCommentaires())
     {
       s += DTOUtils.toDTO(c) + "\n";
     }
@@ -92,10 +99,18 @@ public class CentreInteretREST
   //-----------------------------------------------------------------------------
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  @Path("/ci")
-  public List<CentreInteretDTO> getCentresInteret()
+  @Path("/poi")
+  public List<PoiDTO> getPois()
   {
-    return DTOUtils.toListeCentreInteretDTO(serviceCentreInteret.listeDesCentresInteret());
+    return DTOUtils.toListePoisDTO(servicePoint.listeDesPois());
+  }
+  //-----------------------------------------------------------------------------
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("/service")
+  public List<ServiceDTO> getServices()
+  {
+    return DTOUtils.toListeServicesDTO(servicePoint.listeDesServices());
   }
   //-----------------------------------------------------------------------------
   @GET
@@ -103,15 +118,23 @@ public class CentreInteretREST
   @Path("/comm")
   public List<CommentaireDTO> getCommentaires()
   {
-    return DTOUtils.toListeCommentaireDTO(serviceCentreInteret.listeDesCommentaires());
+    return DTOUtils.toListeCommentaireDTO(servicePoint.listeDesCommentaires());
   }
   //-----------------------------------------------------------------------------
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  @Path("/ci/{id}")
-  public CentreInteretDTO getCentreInteretById(@PathParam("id") int id)
+  @Path("/service/{id}")
+  public ServiceDTO getServiceById(@PathParam("id") int id)
   {
-    return DTOUtils.toDTO(serviceCentreInteret.getCentreInteret(id));
+    return DTOUtils.toDTO(servicePoint.getService(id));
+  }
+  //-----------------------------------------------------------------------------
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("/poi/{id}")
+  public PoiDTO getPoiById(@PathParam("id") int id)
+  {
+    return DTOUtils.toDTO(servicePoint.getPoi(id));
   }
   //-----------------------------------------------------------------------------
   @GET
@@ -119,32 +142,54 @@ public class CentreInteretREST
   @Path("/comm/{id}")
   public CommentaireDTO getCommentaireById(@PathParam("id") int id)
   {
-    return DTOUtils.toDTO(serviceCentreInteret.getCommentaire(id));
+    return DTOUtils.toDTO(servicePoint.getCommentaire(id));
   }
   //-----------------------------------------------------------------------------
   @POST
   @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
   @Produces(MediaType.APPLICATION_JSON)
-  @Path("/getByPosition")
-  public CentreInteretDTO getCentreInteretByPosition(@FormParam("latitude")  String latitude,
-                                                     @FormParam("longitude") String longitude)
+  @Path("/new_poi")
+  public PoiDTO nouveauPoi(@FormParam("latitude")  String latitude,
+                           @FormParam("longitude") String longitude,
+                           @FormParam("type")      String type)
   {
-    return DTOUtils.toDTO(serviceCentreInteret.getCentreInteret(latitude, longitude));
+    Poi poi = servicePoint.nouveauPoi(latitude, longitude, type);
+    return DTOUtils.toDTO(poi);
+  }
+  //-----------------------------------------------------------------------------
+  @POST
+  @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("/getPoiByPosition")
+  public PoiDTO getPoiByPosition(@FormParam("latitude")  String latitude,
+                                 @FormParam("longitude") String longitude)
+  {
+    return DTOUtils.toDTO(servicePoint.getPoi(latitude, longitude));
+  }
+  //-----------------------------------------------------------------------------
+  @POST
+  @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("/getServiceByPosition")
+  public ServiceDTO getServiceByPosition(@FormParam("latitude")  String latitude,
+                                         @FormParam("longitude") String longitude)
+  {
+    return DTOUtils.toDTO(servicePoint.getService(latitude, longitude));
   }
   //-----------------------------------------------------------------------------
   @POST
   @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/new_comment")
-  public CommentaireDTO nouveauCommentaire(@FormParam("id_utilisateur")    int     idUtilisateur,
-                                           @FormParam("id_centre_interet") int     idCentreInteret,
-                                           @FormParam("contenu")           String  contenu,
-                                           @FormParam("partage_public")    boolean partagePublic)
+  public CommentaireDTO nouveauCommentaire(@FormParam("id_utilisateur") int     idUtilisateur,
+                                           @FormParam("id_point")       int     idPoint,
+                                           @FormParam("contenu")        String  contenu,
+                                           @FormParam("partage_public") boolean partagePublic)
   {
-    Commentaire commentaire =  serviceCentreInteret.nouveauCommentaire(idUtilisateur,
-                                                                       idCentreInteret,
-                                                                       contenu,
-                                                                       partagePublic);
+    Commentaire commentaire =  servicePoint.nouveauCommentaire(idUtilisateur,
+                                                               idPoint,
+                                                               contenu,
+                                                               partagePublic);
     return DTOUtils.toDTO(commentaire);
   }
   //-----------------------------------------------------------------------------
@@ -152,9 +197,9 @@ public class CentreInteretREST
   @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/comm_ci")
-  public List<CommentaireDTO> listeDesCommentairesPourUnCentreInteret(@FormParam("id_centre_interet") int idCentreInteret)
+  public List<CommentaireDTO> listeDesCommentairesPourUnPoint(@FormParam("id_point") int idPoint)
   {
-    return DTOUtils.toListeCommentaireDTO(serviceCentreInteret.listeDesCommentairesPourUnCentreInteret(idCentreInteret));
+    return DTOUtils.toListeCommentaireDTO(servicePoint.listeDesCommentairesPourUnPoint(idPoint));
   }
   //-----------------------------------------------------------------------------
   @POST
@@ -163,7 +208,7 @@ public class CentreInteretREST
   @Path("/comm_ut")
   public List<CommentaireDTO> listeDesCommentairesPourUnUtilisateur(@FormParam("id_utilisateur") int idUtilisateur)
   {
-    return DTOUtils.toListeCommentaireDTO(serviceCentreInteret.listeDesCommentairesPourUnUtilisateur(idUtilisateur));
+    return DTOUtils.toListeCommentaireDTO(servicePoint.listeDesCommentairesPourUnUtilisateur(idUtilisateur));
   }
   //-----------------------------------------------------------------------------
 }
