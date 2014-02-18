@@ -16,8 +16,8 @@ drop table point;
 drop table est_ami;
 drop table utilisateur;
 
-drop type type_service;
-drop type type_poi;
+--drop type type_service;
+--drop type type_poi;
 
 -- +----------------------------------------------------------------------------------------------+
 -- | Création des tables                                                                          |
@@ -67,8 +67,8 @@ create table est_ami
 
 -- ------------------------------------------------------------------------------------------------
 
-create type type_service as enum ('administration', 'capitainerie', 'carburant', 'douche', 'manutention', 'ordure', 'parking', 'supermarche', 'visiteur', 'wc');
-create type type_poi     as enum ('remarque', 'peche', 'securite');
+--create type type_service as enum ('administration', 'capitainerie', 'carburant', 'douche', 'manutention', 'ordure', 'parking', 'supermarche', 'visiteur', 'wc');
+--create type type_poi     as enum ('remarque', 'peche', 'securite');
 
 -- ------------------------------------------------------------------------------------------------
 
@@ -84,7 +84,16 @@ create table point
 create table service
 (
   id          integer primary key references point,
-  type        type_service not null,
+  type        varchar(15) not null check (type in ('administration',
+                                                   'capitainerie',
+                                                   'carburant',
+                                                   'douche',
+                                                   'manutention',
+                                                   'ordure',
+                                                   'parking',
+                                                   'supermarche',
+                                                   'visiteur',
+                                                   'wc')),
   description text
 );
 
@@ -93,7 +102,9 @@ create table service
 create table poi
 (
   id   integer primary key references point,
-  type type_poi not null
+  type varchar(8) not null check (type in ('remarque',
+                                           'peche',
+                                           'securite'))
 );
 
 -- ------------------------------------------------------------------------------------------------
