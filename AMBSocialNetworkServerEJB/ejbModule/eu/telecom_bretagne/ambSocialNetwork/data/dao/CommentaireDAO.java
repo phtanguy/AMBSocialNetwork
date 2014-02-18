@@ -60,10 +60,10 @@ public class CommentaireDAO
   }
   //----------------------------------------------------------------------------
   @SuppressWarnings("unchecked")
-  public List<Commentaire> findAllByCentreInteret(int idCentreInteret)
+  public List<Commentaire> findAllByPoint(int idPoint)
   {
-    Query query = entityManager.createQuery("select c from Commentaire c join c.centreInteretBean ci where ci.id = :idCentreInteret order by c.datePublication desc");
-    query.setParameter("idCentreInteret", idCentreInteret);
+    Query query = entityManager.createQuery("select c from Commentaire c join c.pointBean p where p.id = :idPoint order by c.datePublication desc");
+    query.setParameter("idPoint", idPoint);
     @SuppressWarnings("rawtypes")
     List l = query.getResultList();
     

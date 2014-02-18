@@ -7,11 +7,15 @@ import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
-import eu.telecom_bretagne.ambSocialNetwork.data.dao.CentreInteretDAO;
 import eu.telecom_bretagne.ambSocialNetwork.data.dao.CommentaireDAO;
+import eu.telecom_bretagne.ambSocialNetwork.data.dao.PoiDAO;
+import eu.telecom_bretagne.ambSocialNetwork.data.dao.PointDAO;
+import eu.telecom_bretagne.ambSocialNetwork.data.dao.ServiceDAO;
 import eu.telecom_bretagne.ambSocialNetwork.data.dao.UtilisateurDAO;
-import eu.telecom_bretagne.ambSocialNetwork.data.model.CentreInteret;
 import eu.telecom_bretagne.ambSocialNetwork.data.model.Commentaire;
+import eu.telecom_bretagne.ambSocialNetwork.data.model.Poi;
+import eu.telecom_bretagne.ambSocialNetwork.data.model.Point;
+import eu.telecom_bretagne.ambSocialNetwork.data.model.Service;
 import eu.telecom_bretagne.ambSocialNetwork.data.model.Utilisateur;
 
 /**
@@ -19,25 +23,33 @@ import eu.telecom_bretagne.ambSocialNetwork.data.model.Utilisateur;
  */
 @Stateless
 @LocalBean
-public class ServiceCentreInteret implements IServiceCentreInteret
+public class ServicePoint implements IServicePoint
 {
   //-----------------------------------------------------------------------------
-  @EJB CentreInteretDAO centreInteretDAO;
+  @EJB PointDAO         pointDAO;
+  @EJB PoiDAO           poiDAO;
+  @EJB ServiceDAO       serviceDAO;
   @EJB CommentaireDAO   commentaireDAO;
   @EJB UtilisateurDAO   utilisateurDAO;
   //-----------------------------------------------------------------------------
   /**
    * Default constructor.
    */
-  public ServiceCentreInteret()
+  public ServicePoint()
   {
     // TODO Auto-generated constructor stub
   }
   //-----------------------------------------------------------------------------
   @Override
-  public CentreInteret getCentreInteret(int id)
+  public Poi getPoi(int id)
   {
-    return centreInteretDAO.findById(id);
+    return poiDAO.findById(id);
+  }
+  //-----------------------------------------------------------------------------
+  @Override
+  public Service getService(int id)
+  {
+    return serviceDAO.findById(id);
   }
   //-----------------------------------------------------------------------------
   @Override
@@ -47,39 +59,73 @@ public class ServiceCentreInteret implements IServiceCentreInteret
   }
   //-----------------------------------------------------------------------------
   @Override
-  public CentreInteret getCentreInteret(String latitude, String longitude)
+  public Poi getPoi(String latitude, String longitude)
   {
-    return centreInteretDAO.findByPosition(latitude, longitude);
+    return poiDAO.findByPosition(latitude, longitude);
   }
   //-----------------------------------------------------------------------------
   @Override
-  public List<CentreInteret> listeDesCentresInteret()
+  public Service getService(String latitude, String longitude)
   {
-    return centreInteretDAO.findAll();
+    return serviceDAO.findByPosition(latitude, longitude);
   }
   //-----------------------------------------------------------------------------
   @Override
-  public Commentaire nouveauCommentaire(int idUtilisateur,
-                                        int idCentreInteret,
-                                        String contenu, 
+  public List<Poi> listeDesPois()
+  {
+    return poiDAO.findAll();
+  }
+  //-----------------------------------------------------------------------------
+  @Override
+  public List<Service> listeDesServices()
+  {
+    return serviceDAO.findAll();
+  }
+  //-----------------------------------------------------------------------------
+  @Override
+  public Poi nouveauPoi(String latitude, String longitude, String type)
+  {
+    Point point = new Point();
+    point.setLatitude(latitude);
+    point.setLongitude(longitude);
+    pointDAO.persist(point);
+    
+    Poi poi = new Poi();
+    poi.setId(point.getId());
+    poi.setType(type);
+    poiDAO.persist(poi, point);
+    
+    poi.setPoint(point);
+    poiDAO.update(poi);
+    point.setPoi(poi);
+    pointDAO.update(point);
+    
+    return poi;
+  }
+  //-----------------------------------------------------------------------------
+  @Override
+  public Commentaire nouveauCommentaire(int     idUtilisateur,
+                                        int     idPoint,
+                                        String  contenu, 
                                         boolean partagePublic)
   {
-    Utilisateur   utilisateur   = utilisateurDAO.findById(idUtilisateur);
-    CentreInteret centreInteret = centreInteretDAO.findById(idCentreInteret);
+    Utilisateur utilisateur = utilisateurDAO.findById(idUtilisateur);
+    Point       point       = pointDAO.findById(idPoint);
+    
     Commentaire commentaire = new Commentaire();
     commentaire.setUtilisateurBean(utilisateur);
-    commentaire.setCentreInteretBean(centreInteret);
+    commentaire.setPointBean(point);
     commentaire.setContenu(contenu);
     commentaire.setPartageCommentairePublic(partagePublic);
     commentaire.setDatePublication(new Timestamp(System.currentTimeMillis()));
     commentaire.setUrlPhoto(null);
     commentaire = commentaireDAO.persist(commentaire);
-    
+
     utilisateur.getCommentaires().add(commentaire);
-    centreInteret.getCommentaires().add(commentaire);
-    
     utilisateurDAO.update(utilisateur);
-    centreInteretDAO.update(centreInteret);
+
+    point.getCommentaires().add(commentaire);
+    pointDAO.update(point);
     
     return commentaire;
   }
@@ -91,14 +137,13 @@ public class ServiceCentreInteret implements IServiceCentreInteret
   }
   //-----------------------------------------------------------------------------
   @Override
-  public List<Commentaire> listeDesCommentairesPourUnCentreInteret(int idCentreInteret)
+  public List<Commentaire> listeDesCommentairesPourUnPoint(int idPoint)
   {
-    return commentaireDAO.findAllByCentreInteret(idCentreInteret);
+    return commentaireDAO.findAllByPoint(idPoint);
   }
   //-----------------------------------------------------------------------------
   @Override
-  public List<Commentaire> listeDesCommentairesPourUnUtilisateur(
-      int idUtilisateur)
+  public List<Commentaire> listeDesCommentairesPourUnUtilisateur(int idUtilisateur)
   {
     return commentaireDAO.findAllByUtilisateur(idUtilisateur);
   }

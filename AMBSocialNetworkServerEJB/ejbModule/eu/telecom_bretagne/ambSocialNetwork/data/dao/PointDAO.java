@@ -2,14 +2,12 @@ package eu.telecom_bretagne.ambSocialNetwork.data.dao;
 
 import java.util.List;
 
-import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import eu.telecom_bretagne.ambSocialNetwork.data.model.Poi;
 import eu.telecom_bretagne.ambSocialNetwork.data.model.Point;
 
 /**
@@ -17,7 +15,7 @@ import eu.telecom_bretagne.ambSocialNetwork.data.model.Point;
  */
 @Stateless
 @LocalBean
-public class PoiDAO
+public class PointDAO
 {
   //-----------------------------------------------------------------------------
   /**
@@ -25,13 +23,11 @@ public class PoiDAO
    */
   @PersistenceContext
   EntityManager entityManager;
-  
-  @EJB PointDAO pointDAO;
   //-----------------------------------------------------------------------------
   /**
    * Default constructor.
    */
-  public PoiDAO()
+  public PointDAO()
   {
     // TODO Auto-generated constructor stub
   }
@@ -41,69 +37,54 @@ public class PoiDAO
    * @param poi bean entity représentant l'instance.
    * @return l'instance de l'utilisateur une fois persistée dans la base de données.
    */
-  public Poi persist(Poi poi, Point point)
+  public Point persist(Point point)
   {
     entityManager.persist(point);
-    
-    poi.setId(point.getId());
-    entityManager.persist(poi);
-    
-    poi.setPoint(point);
-    update(poi);
-    
-    point.setPoi(poi);
-    update(point);
-    
-    return poi;
+    return point;
   }
   //----------------------------------------------------------------------------
-  public Poi findById(Integer id)
+  public Point findById(Integer id)
   {
-    return entityManager.find(Poi.class, id);
+    return entityManager.find(Point.class, id);
   }
   //----------------------------------------------------------------------------
-  public Poi findByPosition(String latitude, String longitude)
+  public Point findByPosition(String latitude, String longitude)
   {
-    Query query = entityManager.createQuery("select poi from Poi poi join poi.point p where p.latitude = :latitude and p.longitude = :longitude");
+    Query query = entityManager.createQuery("select p from Point p p.latitude = :latitude and p.longitude = :longitude");
     query.setParameter("latitude",  latitude);
     query.setParameter("longitude", longitude);
     @SuppressWarnings("rawtypes")
     List l = query.getResultList();
     if(l.size() == 0)
       return null;
-    return (Poi) l.get(0);
+    return (Point) l.get(0);
   }
   //----------------------------------------------------------------------------
   @SuppressWarnings("unchecked")
-  public List<Poi> findAll()
+  public List<Point> findAll()
   {
-    Query query = entityManager.createQuery("select poi from Poi poi order by poi.id");
+    Query query = entityManager.createQuery("select p from Point p order by p.id");
     @SuppressWarnings("rawtypes")
     List l = query.getResultList(); 
     
-    return (List<Poi>)l;
+    return (List<Point>)l;
   }
   //-----------------------------------------------------------------------------
-  public void update(Point point)
+  public Point update(Point point)
   {
     entityManager.merge(point);
+    return findById(point.getId());
   }
   //-----------------------------------------------------------------------------
-  public Poi update(Poi poi)
+  public void remove(Point point)
   {
-    entityManager.merge(poi);
-    return findById(poi.getId());
-  }
-  //-----------------------------------------------------------------------------
-  public void remove(Poi poi)
-  {
-    if(!entityManager.contains(poi))  // Si l'entité n'est pas dans un état "géré" (managed),
-    {                                 // il est impossible de la supprimer directement, erreur "Entity must be managed to call remove"
-      poi = entityManager.merge(poi); // Il faut la "rattacher" au contexte de persistance par l'appel    
-    }                                 // de la méthode merge de l'ENtityManager.
+    if(!entityManager.contains(point))    // Si l'entité n'est pas dans un état "géré" (managed),
+    {                                     // il est impossible de la supprimer directement, erreur "Entity must be managed to call remove"
+      point = entityManager.merge(point); // Il faut la "rattacher" au contexte de persistance par l'appel    
+    }                                     // de la méthode merge de l'ENtityManager.
     
     // L'entité était déjà attachée ou a été rattachée, on peut donc la supprimer...
-    entityManager.remove(poi);
+    entityManager.remove(point);
   }
   //-----------------------------------------------------------------------------
 }

@@ -20,7 +20,8 @@ public class Service implements Serializable
 
   private String description;
 
-  private Object type;
+  //private Object type;
+  private String type;
 
   // bi-directional one-to-one association to Point
   @OneToOne
@@ -30,13 +31,14 @@ public class Service implements Serializable
   public Service() {}
 
   public Integer getId()          { return this.id;          }
-  public Object  getType()        { return this.type;        }
+  //public Object  getType()        { return this.type;        }
+  public String  getType()        { return this.type;        }
   public String  getDescription() { return this.description; }
   public Point   getPoint()       { return this.point;       }
 
   public void setId(Integer id)                  { this.id          = id;          }
+  public void setType(String type)               { this.type        = type;        }
   public void setDescription(String description) { this.description = description; }
-  public void setType(Object type)               { this.type        = type;        }
   public void setPoint(Point point)              { this.point       = point;       }
 
 }

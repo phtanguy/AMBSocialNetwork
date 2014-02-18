@@ -3,9 +3,10 @@ package eu.telecom_bretagne.ambSocialNetwork.data.model.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-import eu.telecom_bretagne.ambSocialNetwork.data.model.Utilisateur;
 import eu.telecom_bretagne.ambSocialNetwork.data.model.Commentaire;
-import eu.telecom_bretagne.ambSocialNetwork.data.model.CentreInteret;
+import eu.telecom_bretagne.ambSocialNetwork.data.model.Poi;
+import eu.telecom_bretagne.ambSocialNetwork.data.model.Service;
+import eu.telecom_bretagne.ambSocialNetwork.data.model.Utilisateur;
 
 public class DTOUtils
 {
@@ -62,7 +63,7 @@ public class DTOUtils
     CommentaireDTO cDTO = new CommentaireDTO();
     cDTO.setId(commentaire.getId());
     cDTO.setUtilisateurId(commentaire.getUtilisateurBean().getId());
-    cDTO.setCentreInteretId(commentaire.getCentreInteretBean().getId());
+    cDTO.setPointId(commentaire.getPointBean().getId());
     cDTO.setContenu(commentaire.getContenu());
     cDTO.setUrlPhoto(commentaire.getUrlPhoto());
     cDTO.setDatePublication(commentaire.getDatePublication());
@@ -71,25 +72,48 @@ public class DTOUtils
     return cDTO;
   }
   //-----------------------------------------------------------------------------
-  public static CentreInteretDTO toDTO(CentreInteret centreInteret)
+  public static ServiceDTO toDTO(Service service)
   {
-    CentreInteretDTO ciDTO = new CentreInteretDTO();
-    ciDTO.setId(centreInteret.getId());
-    ciDTO.setNom(centreInteret.getNom());
-    ciDTO.setDescription(centreInteret.getDescription());
-    ciDTO.setLatitude(centreInteret.getLatitude());
-    ciDTO.setLongitude(centreInteret.getLongitude());
+    ServiceDTO serviceDTO = new ServiceDTO();
+    
+    serviceDTO.setId(service.getId());
+    serviceDTO.setType(service.getType());
+    serviceDTO.setDescription(service.getDescription());
+    serviceDTO.setLatitude(service.getPoint().getLatitude());
+    serviceDTO.setLongitude(service.getPoint().getLongitude());
     List<Integer> commentairesId = new ArrayList<Integer>();
-    if(centreInteret.getCommentaires() != null)
+    if(service.getPoint().getCommentaires() != null)
     {
-      for(Commentaire c : centreInteret.getCommentaires())
+      for(Commentaire c : service.getPoint().getCommentaires())
       {
         commentairesId.add(c.getId());
       }
     }
-    ciDTO.setCommentaires(commentairesId);
+    serviceDTO.setCommentaires(commentairesId);
     
-    return ciDTO;
+    return serviceDTO;
+  }
+  //-----------------------------------------------------------------------------
+  public static PoiDTO toDTO(Poi poi)
+  {
+    PoiDTO poiDTO = new PoiDTO();
+    
+    
+    poiDTO.setId(poi.getId());
+    poiDTO.setType(poi.getType());
+    poiDTO.setLatitude(poi.getPoint().getLatitude());
+    poiDTO.setLongitude(poi.getPoint().getLongitude());
+    List<Integer> commentairesId = new ArrayList<Integer>();
+    if(poi.getPoint().getCommentaires() != null)
+    {
+      for(Commentaire c : poi.getPoint().getCommentaires())
+      {
+        commentairesId.add(c.getId());
+      }
+    }
+    poiDTO.setCommentaires(commentairesId);
+    
+    return poiDTO;
   }
   //-----------------------------------------------------------------------------
   public static List<UtilisateurDTO> toListeUtilisateurDTO(List<Utilisateur> utilisateurs)
@@ -102,12 +126,22 @@ public class DTOUtils
     return resultat;
   }
   //-----------------------------------------------------------------------------
-  public static List<CentreInteretDTO> toListeCentreInteretDTO(List<CentreInteret> centresInteret)
+  public static List<ServiceDTO> toListeServicesDTO(List<Service> services)
   {
-    List<CentreInteretDTO> resultat = new ArrayList<CentreInteretDTO>();
-    for(CentreInteret ci : centresInteret)
+    List<ServiceDTO> resultat = new ArrayList<ServiceDTO>();
+    for(Service service : services)
     {
-      resultat.add(DTOUtils.toDTO(ci));
+      resultat.add(DTOUtils.toDTO(service));
+    }
+    return resultat;
+  }
+  //-----------------------------------------------------------------------------
+  public static List<PoiDTO> toListePoisDTO(List<Poi> pois)
+  {
+    List<PoiDTO> resultat = new ArrayList<PoiDTO>();
+    for(Poi poi : pois)
+    {
+      resultat.add(DTOUtils.toDTO(poi));
     }
     return resultat;
   }
