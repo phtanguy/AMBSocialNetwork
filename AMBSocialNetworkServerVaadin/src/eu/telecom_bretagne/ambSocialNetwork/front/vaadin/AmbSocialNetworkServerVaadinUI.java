@@ -1,5 +1,7 @@
 package eu.telecom_bretagne.ambSocialNetwork.front.vaadin;
 
+import java.io.File;
+import java.nio.file.FileSystem;
 import java.util.List;
 
 import javax.servlet.annotation.WebServlet;
@@ -7,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.data.Container;
+import com.vaadin.data.util.FilesystemContainer;
 import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
@@ -28,6 +31,12 @@ public class AmbSocialNetworkServerVaadinUI extends UI
 {
   //-----------------------------------------------------------------------------
   private Table utilisateurList = new Table();
+  TestComposite testComposite = new TestComposite();
+
+  String path = "D:/Perso/Photos/2014/124_photos_février_2014";
+  FilesystemContainer filesystemContainer = new FilesystemContainer(new File(path));
+  Table docList = new Table(path, filesystemContainer);
+  
   private static final String ID              = "ID";
   private static final String NOM             = "Nom";
   private static final String PRENOM          = "Prénom";
@@ -68,6 +77,7 @@ public class AmbSocialNetworkServerVaadinUI extends UI
     layout.setMargin(true);
     setContent(layout);
 
+    
 //    Button button = new Button("Click Me");
 //    button.addClickListener(new Button.ClickListener()
 //    {
@@ -80,8 +90,13 @@ public class AmbSocialNetworkServerVaadinUI extends UI
     
     Label labelTitre = new Label("Liste des utilisateurs référencés");
     layout.addComponent(labelTitre);
-    layout.addComponent(new Label(""));
+    layout.addComponent(new Label("---"));
+    layout.addComponent(docList);
+    layout.addComponent(new Label("---"));
+    layout.addComponent(testComposite);
+    layout.addComponent(new Label("---"));
     layout.addComponent(utilisateurList);
+    
   }
   //-----------------------------------------------------------------------------
   private void initUtilisateurList()

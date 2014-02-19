@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <title>Notes sur l'installation du plugin Vaadin</title>
+  </head>
+
+  <body>
+    <h1>Notes sur l'installation du plugin Vaadin</h1>
+    
+    <h4>Problème : l'éditeur graphique se s'affiche pas</h4>
+    <ul>
+      <li>Windows 7 x64</li>
+      <li>Eclipse Kepler x64, Java 1.7.0_45 x64</li>
+      <li>Plugin Vaadin 2.2</li>
+    </ul>
+    <p>Le plugin nécessite l'utilisation de XULRunner pour fonctionner.</p>
+    <p><img src="02.png" alt="Visual Editor" width="50%"/></p>
+
+    <h4>Solution</h4>
+    <ul>
+      <li>Description de la solution : <a href="http://stackoverflow.com/questions/19381002/vaadin-visual-designer">http://stackoverflow.com/questions/19381002/vaadin-visual-designer</a></li>
+      <li>Téléchargement de XULRunner : <a href="http://sourceforge.net/projects/xulrunnerinstal/">http://sourceforge.net/projects/xulrunnerinstal/</a></li>
+      <li>Installation dans <i>C:\Program Files (x86)\Mozilla XULRunner</i> (choix par défaut)</li>
+      <li>
+        Modification du fichier <i>eclipse.ini</i> (dans <i>C:\Program Files\eclipse-jee-kepler-R-win32-x86_64</i>)<br/>
+        Ajout en fin de fichier de la ligne :
+        <ul>
+          <li><i>-Dorg.eclipse.swt.browser.XULRunnerPath=C:\Program Files (x86)\Mozilla XULRunner</i></li>
+          <li>Au lancement, un message d'alerte s'affiche : cocher la case <i>Do not show this message in the future.</i></li>
+        </ul>
+      </li>
+    </ul>
+    <img src="03.png" alt="alert"/>
+  </body>
+</html>
