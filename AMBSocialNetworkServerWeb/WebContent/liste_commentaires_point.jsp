@@ -22,7 +22,7 @@
   <body>
     <h2>Liste des commentaires pour un point (POI ou service)</h2>
     
-    <form action="RestWebServices/centre_interet/comm_ci" method="post">
+    <form action="RestWebServices/point/comm_point" method="post">
       <table id="affichage">
         <tr>
           <th style="width: 170px;">Centre d'intérêt :</th>

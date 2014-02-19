@@ -22,7 +22,7 @@
   <body>
     <h2>Liste des commentaires pour un utilisateur</h2>
     
-    <form action="RestWebServices/centre_interet/comm_ut" method="post">
+    <form action="RestWebServices/point/comm_ut" method="post">
       <table id="affichage">
         <tr>
           <th style="width: 170px;">Utilisateur :</th>

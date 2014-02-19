@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
   <head>
     <meta charset="ISO-8859-1">
@@ -33,22 +33,27 @@
         </td>
       </tr>
       <tr>
-        <th style="width: 170px;">Centres d'intéret<br/>+ commentaires</th>
+        <th style="width: 170px;">Points (POI et services)<br/>+ commentaires</th>
         <td>
           <ul>
-            <li><a href="RestWebServices/centre_interet/HelloHtml">Test fonctionnement classe CentreInteretREST</a></li>
-            <li><a href="RestWebServices/centre_interet/ci_text">Liste des centres d'intérêt</a> (format texte via Web Service REST)</li>
-            <li><a href="RestWebServices/centre_interet/ci">Liste des centres d'intérêt</a> (format JSON via Web Service REST)</li>
-            <li><a href="RestWebServices/centre_interet/ci/1">Centre d'intérêt id=1</a></li>
-            <li><a href="get_centre_interet.html">Centre d'intérêt par position</a></li>
+            <li><a href="RestWebServices/point/HelloHtml">Test fonctionnement classe PointREST</a></li>
+            <li><a href="RestWebServices/point/points_text">Liste des points (POI + services)</a> (format texte via Web Service REST)</li>
+            <li><a href="RestWebServices/point/poi">Liste des POI</a> (format JSON via Web Service REST)</li>
+            <li><a href="RestWebServices/point/service">Liste des services</a> (format JSON via Web Service REST)</li>
+            <li><a href="RestWebServices/point/poi/17">POI id=17 (premier POI référencé après les 16 services)</a></li>
+            <li><a href="RestWebServices/point/service/1">Service id=1</a></li>
+            <li><a href="get_poi.html">POI par position</a></li>
+            <li><a href="get_service.html">Service par position</a></li>
           </ul>
           <ul>
-            <li><a href="RestWebServices/centre_interet/comm_text">Liste des commentaires</a> (format texte via Web Service REST)</li>
-            <li><a href="RestWebServices/centre_interet/comm">Liste des commentaires</a> (format JSON via Web Service REST)</li>
-            <li><a href="RestWebServices/centre_interet/comm/1">Commentaire id=1</a></li>
+            <li><a href="RestWebServices/point/comm_text">Liste des commentaires</a> (format texte via Web Service REST)</li>
+            <li><a href="RestWebServices/point/comm">Liste des commentaires</a> (format JSON via Web Service REST)</li>
+            <li><a href="RestWebServices/point/comm/1">Commentaire id=1</a></li>
             <li><a href="liste_commentaires_utilisateur.jsp">Commentaires pour un utilisateur</a></li>
-            <li><a href="liste_commentaires_centre_interet.jsp">Commentaires pour un centre d'intérêt</a></li>
+            <li><a href="liste_commentaires_point.jsp">Commentaires pour un point (POI ou service)</a></li>
             <li><a href="new_commentaire.jsp">Nouveau commentaire</a></li>
+            <li><a href="new_poi_commentaire.jsp">Nouveau POI avec commentaire associé</a></li>
+            <li><a href="new_poi.html">Nouveau POI (sans commentaire associé)</a></li>
           </ul>
         </td>
       </tr>

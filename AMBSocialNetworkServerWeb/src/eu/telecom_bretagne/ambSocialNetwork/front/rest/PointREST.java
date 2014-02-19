@@ -22,7 +22,7 @@ import eu.telecom_bretagne.ambSocialNetwork.front.utils.ServicesLocator;
 import eu.telecom_bretagne.ambSocialNetwork.front.utils.ServicesLocatorException;
 import eu.telecom_bretagne.ambSocialNetwork.service.IServicePoint;
 
-@Path("/centre_interet")
+@Path("/point")
 public class PointREST
 {
   //-----------------------------------------------------------------------------
@@ -32,7 +32,7 @@ public class PointREST
     try
     {
       servicePoint = (IServicePoint) ServicesLocator.getInstance().getRemoteInterface("ServicePoint");
-      System.out.println("####### Classe CentreInteretREST : composants EJB récupérés !");
+      System.out.println("####### Classe PointREST : composants EJB récupérés !");
       
     }
     catch (ServicesLocatorException e)
@@ -53,7 +53,7 @@ public class PointREST
          + "    <link rel=\"stylesheet\" href=\"/AMBSocialNetworkServerWeb/styles.css\" type=\"text/css\" />"
          + "  </head>"
          + "  <body>"
-         + "    <h2>Hello from CentreInteretREST</h2>"
+         + "    <h2>Hello from PointREST</h2>"
          + "  </body>"
          + "</html> ";
   }
@@ -65,10 +65,16 @@ public class PointREST
   {
     String separateur = "---------------------------------------------------------\n";
     String s = separateur;
-    
-    for(Poi poi : servicePoint.listeDesPois())
+    if(servicePoint.listeDesPois().size() == 0)
     {
-      s += DTOUtils.toDTO(poi) + "\n";
+      s += " => Il n'y a aucun POI dans la base.\n";
+    }
+    else
+    {
+      for(Poi poi : servicePoint.listeDesPois())
+      {
+        s += DTOUtils.toDTO(poi) + "\n";
+      }
     }
     s += separateur;
     for(Service service : servicePoint.listeDesServices())
@@ -191,6 +197,22 @@ public class PointREST
                                                                contenu,
                                                                partagePublic);
     return DTOUtils.toDTO(commentaire);
+  }
+  //-----------------------------------------------------------------------------
+  @POST
+  @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("/new_poi_comment")
+  public PoiDTO nouveauPoiAvecCommentaire(@FormParam("latitude")       String  latitude,
+                                          @FormParam("longitude")      String  longitude,
+                                          @FormParam("type")           String  type,
+                                          @FormParam("id_utilisateur") int     idUtilisateur,
+                                          @FormParam("contenu")        String  contenu,
+                                          @FormParam("partage_public") boolean partagePublic)
+  {
+    Poi poi = servicePoint.nouveauPoiAvecCommentaire(latitude, longitude, type,
+                                                     idUtilisateur, contenu, partagePublic); 
+    return DTOUtils.toDTO(poi);
   }
   //-----------------------------------------------------------------------------
   @POST

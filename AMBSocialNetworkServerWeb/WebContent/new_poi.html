@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <title>Ajout d'un POI sans commentaire</title>
+    <link rel="stylesheet" href="styles.css" type="text/css" />
+  </head>
+  
+  <body>
+    <h2>Ajout d'un POI sans commentaire</h2>
+    
+    <form action="RestWebServices/point/new_poi" method="post">
+      <table id="affichage">
+        <tr>
+          <th style="width: 170px;">Latitude du POI :</th>
+          <td>
+            <input type="text" name="latitude" size="11" maxlength="11">
+          </td>
+        </tr>
+        <tr>
+          <th style="width: 170px;">Longitude du POI:</th>
+          <td>
+            <input type="text" name="longitude" size="11" maxlength="11">
+          </td>
+        </tr>
+        <tr>
+          <th style="width: 170px;">Type du POI :</th>
+          <td>
+            <input type=radio name="type" value="remarque" checked="checked">Remarque
+            <input type=radio name="type" value="peche">Pêche
+            <input type=radio name="type" value="securite">Sécurité
+          </td>
+        </tr>
+      </table>
+      <p>
+        <input type="submit" value="Poster"/>
+      </p>
+    </form>
+  </body>
+</html>
