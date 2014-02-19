@@ -1,6 +1,7 @@
 package eu.telecom_bretagne.ambSocialNetwork.data.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 /**
@@ -14,8 +15,7 @@ public class Service implements Serializable
   private static final long serialVersionUID = 1L;
 
   @Id
-  @SequenceGenerator(name = "SERVICE_ID_GENERATOR", sequenceName = "SERVICE_ID_SEQ")
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SERVICE_ID_GENERATOR")
+  @Column(insertable = false, updatable = false, nullable = false)
   private Integer id;
 
   private String description;

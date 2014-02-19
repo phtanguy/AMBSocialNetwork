@@ -5,7 +5,7 @@ import java.util.List;
 
 
 /**
- * The persistent class for the centre_interet database table.
+ * The persistent class for the service database table.
  * 
  */
 public class ServiceDTO implements Serializable {
@@ -37,7 +37,7 @@ public class ServiceDTO implements Serializable {
   @Override
   public String toString()
   {
-    return "ServiceDTO [id=" + id + ", description=" + description + ", latitude=" + latitude + ", longitude=" + longitude + ", nom=" + type + "]";
+    return "ServiceDTO [id=" + id + ", description=" + description + ", latitude=" + latitude + ", longitude=" + longitude + ", type=" + type + "]";
   }
 
 }

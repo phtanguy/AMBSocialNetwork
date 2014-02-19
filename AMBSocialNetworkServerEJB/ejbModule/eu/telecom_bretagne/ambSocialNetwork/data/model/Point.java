@@ -15,7 +15,7 @@ public class Point implements Serializable
   private static final long serialVersionUID = 1L;
 
   @Id
-  @SequenceGenerator(name = "POINT_ID_GENERATOR", sequenceName = "POINT_ID_SEQ")
+  @SequenceGenerator(name = "POINT_ID_GENERATOR", sequenceName = "POINT_ID_SEQ", allocationSize=1)
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "POINT_ID_GENERATOR")
   private Integer id;
 

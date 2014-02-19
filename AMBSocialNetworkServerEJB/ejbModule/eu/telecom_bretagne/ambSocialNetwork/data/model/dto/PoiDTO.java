@@ -5,7 +5,7 @@ import java.util.List;
 
 
 /**
- * The persistent class for the centre_interet database table.
+ * The persistent class for the poi database table.
  * 
  */
 public class PoiDTO implements Serializable {
@@ -34,7 +34,7 @@ public class PoiDTO implements Serializable {
   @Override
   public String toString()
   {
-    return "PoiDTO [id=" + id + ", latitude=" + latitude + ", longitude=" + longitude + ", nom=" + type + "]";
+    return "PoiDTO [id=" + id + ", latitude=" + latitude + ", longitude=" + longitude + ", type=" + type + "]";
   }
 
 }

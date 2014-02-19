@@ -14,8 +14,7 @@ public class Poi implements Serializable
   private static final long serialVersionUID = 1L;
 
   @Id
-  @SequenceGenerator(name = "POI_ID_GENERATOR", sequenceName = "POI_ID_SEQ")
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "POI_ID_GENERATOR")
+  @Column(insertable = false, updatable = false, nullable = false)
   private Integer id;
 
   //private Object type;

@@ -63,7 +63,7 @@ public class ServiceDAO
   @SuppressWarnings("unchecked")
   public List<Service> findAll()
   {
-    Query query = entityManager.createQuery("select s from service s order by s.id");
+    Query query = entityManager.createQuery("select s from Service s order by s.id");
     @SuppressWarnings("rawtypes")
     List l = query.getResultList(); 
     

@@ -131,6 +131,20 @@ public class ServicePoint implements IServicePoint
   }
   //-----------------------------------------------------------------------------
   @Override
+  public Poi nouveauPoiAvecCommentaire(String  latitude,
+                                       String  longitude,
+                                       String  type,
+                                       int     idUtilisateur,
+                                       String  contenu,
+                                       boolean partagePublic)
+  {
+    Poi poi = nouveauPoi(latitude, longitude, type);
+    nouveauCommentaire(idUtilisateur, poi.getId(), contenu, partagePublic);
+    
+    return poi;
+  }
+  //-----------------------------------------------------------------------------
+  @Override
   public List<Commentaire> listeDesCommentaires()
   {
     return commentaireDAO.findAll();

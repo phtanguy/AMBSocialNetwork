@@ -20,6 +20,12 @@ public interface IServicePoint
   public List<Poi>           listeDesPois();
   public List<Service>       listeDesServices();
   public Poi                 nouveauPoi(String latitude, String longitude, String type);
+  public Poi                 nouveauPoiAvecCommentaire(String  latitude,
+                                                       String  longitude,
+                                                       String  type,
+                                                       int     idUtilisateur,
+                                                       String  contenu,
+                                                       boolean partagePublic);
   public Commentaire         nouveauCommentaire(int     idUtilisateur,
                                                 int     idPoint,
                                                 String  contenu,
